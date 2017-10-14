@@ -23,8 +23,14 @@ hs_err_pid*
 
 # Intellij IDEA files
 
+#Week1
 Week1/.idea/*
 Week1/DesktopApp/.idea/*
 Week1/out/*
 *.iml
 *.idea/*
+
+#Week2
+
+Week2/.idea/*
+Week2/out/*
