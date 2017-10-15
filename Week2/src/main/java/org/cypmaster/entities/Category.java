@@ -1,11 +1,14 @@
 package org.cypmaster.entities;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.jws.soap.SOAPBinding;
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "categories")
+@Cacheable
 public class Category {
 
     @Id

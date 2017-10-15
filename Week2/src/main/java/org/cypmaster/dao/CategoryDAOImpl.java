@@ -10,8 +10,10 @@ import java.util.concurrent.ExecutorService;
 
 public class CategoryDAOImpl implements CategoryDAO {
 
-    private EntityManager entityManager;
     private final static String PERSISTENCE_UNIT_NAME = "MyPersistenceUnit";
+    public static final String HIBERNATE_CACHEABLE_PROPERTY_NAME = "org.hibernate.cacheable";
+
+    private EntityManager entityManager;
 
     private final String getCategoriesQuery = "SELECT c from Category c";
 
@@ -27,8 +29,8 @@ public class CategoryDAOImpl implements CategoryDAO {
         EntityTransaction entityTransaction = entityManager.getTransaction();
         try {
             entityTransaction.begin();
-
             Query query = entityManager.createQuery(getCategoriesQuery);
+//            query.setHint(HIBERNATE_CACHEABLE_PROPERTY_NAME, Boolean.TRUE);
             List<Category> categories = query.getResultList();
             entityTransaction.commit();
             return categories;

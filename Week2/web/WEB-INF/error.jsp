@@ -12,6 +12,12 @@
 		<title>Error</title>
 	</head>
 	<body>
-		<h2>${message}</h2>
+		<h2>Message:${message}</h2>
+		<h2>
+			Go to
+			<a href="../index.html">
+				Home page
+			</a>
+		</h2>
 	</body>
 </html>

@@ -12,8 +12,9 @@ import javax.json.JsonReader;
 import javax.net.ssl.HttpsURLConnection;
 
 public class VerifyRecaptcha {
-    public static final String url = "https://www.google.com/recaptcha/api/siteverify";
-    public static final String secret = "6LcpejQUAAAAAAkmhP5ipF14bjr4VOa7WYyZJvA5";
+
+    private static final String url = "https://www.google.com/recaptcha/api/siteverify";
+    private static final String secret = "6LcpejQUAAAAAAkmhP5ipF14bjr4VOa7WYyZJvA5";
     private final static String USER_AGENT = "Mozilla/5.0";
 
     public static boolean verify(String gRecaptchaResponse) throws IOException {
@@ -23,7 +24,7 @@ public class VerifyRecaptcha {
         try {
             URL obj = new URL(url);
             HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
-            // add reuqest header
+            // add request header
             con.setRequestMethod("POST");
             con.setRequestProperty("User-Agent", USER_AGENT);
             con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");

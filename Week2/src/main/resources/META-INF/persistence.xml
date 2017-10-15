@@ -5,6 +5,7 @@ http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
 
     <persistence-unit name="MyPersistenceUnit" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
         <properties>
 
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/java"/>
@@ -18,7 +19,10 @@ http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL57Dialect"/>
             <!--<property name="hibernate.hbm2ddl.auto" value="validate"/>-->
             <property name="hibernate.hbm2ddl.auto" value="update"/>
-
+            <!--Cache-->
+            <!--<property name="hibernate.cache.use_second_level_cache" value="true"/>-->
+            <!--<property name="hibernate.cache.region.factory_class"-->
+                      <!--value="org.hibernate.cache.ehcache.EhCacheRegionFactory"/>-->
             <!-- The above property is used to validate that the schema matches (Production Use)-->
             <!-- Configuring Connection Pool -->
             <property name="hibernate.c3p0.min_size" value="5"/>

@@ -11,7 +11,7 @@ public class UserService {
 
     private static UserService ourInstance;
 
-    public UserDAO userDAO;
+    private UserDAO userDAO;
 
     private UserService() {
         this.userDAO = new UserDAOImpl();

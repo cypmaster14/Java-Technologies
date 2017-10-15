@@ -9,7 +9,7 @@ import java.util.List;
 public class CategoryService {
     private static CategoryService ourInstance;
 
-    public CategoryDAO categoryDAO;
+    private CategoryDAO categoryDAO;
 
     public synchronized static CategoryService getInstance() {
         if (ourInstance == null) {
