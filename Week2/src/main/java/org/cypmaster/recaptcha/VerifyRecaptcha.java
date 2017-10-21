@@ -1,4 +1,4 @@
-package org.cypmaster.utils;
+package org.cypmaster.recaptcha;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
