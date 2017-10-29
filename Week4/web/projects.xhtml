@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:loadBundle var="message" basename="Message"/>
+
+    <h:head>
+        <title>
+            Title
+        </title>
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+        <!--Import materialize.css-->
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"/>
+
+        <!--Let browser know website is optimized for mobile-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <!--<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"/>-->
+        <script type="text/javascript"
+                src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"/>
+
+        <script type="text/javascript">
+            function handleAddProjectRequest(xhr, status, args) {
+                console.log(args);
+                if (args.success) {
+                    PF('addProjectWidget').hide();
+                    $('#loginLink').fadeOut();
+                } else {
+                    alert("Failed to add the new student");
+                }
+            }
+        </script>
+
+    </h:head>
+
+    <h:body>
+        <div>
+            <h3 class="center-align">
+                #{message.projects_page}
+            </h3>
+        </div>
+
+        <div class="container">
+
+            <h:form id="projectTableForm">
+                <p:growl id="growl" life="2000"/>
+
+                <p:dataTable id="projectsSkills" var="project" value="#{projectBean.projects}" rowKey="#{project.id}"
+                             selection="#{projectBean.selectedProject}" selectionMode="single">
+
+                    <p:column headerText="Id">
+                        <h:outputText value="#{project.id}"/>
+                    </p:column>
+
+                    <p:column headerText="Name">
+                        <h:outputText value="#{project.name}"/>
+                    </p:column>
+
+                    <p:column headerText="Description">
+                        <h:outputText value="#{project.description}"/>
+                    </p:column>
+
+                    <p:column headerText="Capacity">
+                        <h:outputText value="#{project.capacity}"/>
+                    </p:column>
+
+                </p:dataTable>
+
+                <p:contextMenu for="projectsSkills">
+                    <p:menuitem value="Add" icon="fa-plus" onclick="PF('addProjectWidget').show()"/>
+                    <p:menuitem value="Delete" icon="fa-close" update="projectsSkills growl"
+                                actionListener="#{projectBean.removeProject}"/>
+                </p:contextMenu>
+
+                <p:dialog header="Add Project" widgetVar="addProjectWidget" resizable="false" rendered="true">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputLabel for="projectName" value="Name:"/>
+                        <p:inputText id="projectName" value="#{projectBean.newProject.name}" rendered="true"
+                                     label="Name"></p:inputText>
+
+                        <h:outputLabel for="projectDescription" value="Description:"/>
+                        <p:inputText id="projectDescription" value="#{projectBean.newProject.description}"
+                                     rendered="true"
+                                     label="Description"></p:inputText>
+
+                        <h:outputLabel for="projectCapacity" value="Capacity:"/>
+                        <p:inputText id="projectCapacity" value="#{projectBean.newProject.capacity}" rendered="true"
+                                     label="Name"></p:inputText>
+
+
+                        <f:facet name="footer">
+                            <p:commandButton value="Add" update="projectsSkills growl"
+                                             actionListener="#{projectBean.addProject}"
+                                             oncomplete="handleAddProjectRequest(xhr,status,args)"/>
+                        </f:facet>
+                    </h:panelGrid>
+                </p:dialog>
+            </h:form>
+        </div>
+
+    </h:body>
+</html>

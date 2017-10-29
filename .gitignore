@@ -41,3 +41,9 @@ Week2/out/*
 Week3/.idea/*
 week3/out/*
 Week3/target/*
+
+#Week4
+
+*/.idea/*
+*/out/*
+*/target/*

@@ -36,9 +36,12 @@
 	</head>
 	<body>
 		<div class="container" style="margin-top: 30px">
+
+			<h4></h4>
 			<div class="row">
 				<form class="col s12" method="post" action="/login">
 					<div class="row">
+						<b><c:out value="${requestScope.errorMessages['message']}"/></b>
 						<div class="input-field col s12">
 							<input type="text" name="username" id="username" required/>
 							<label for="username">
@@ -51,6 +54,14 @@
 								<fmt:message key="login.label.password"/>
 							</label>
 						</div>
+						<div class="col s12">
+							<p>
+								<input type="checkbox" id="remember_me" name="remember_me"/>
+								<label for="remember_me">
+									<fmt:message key="login.label.remember"/>
+								</label>
+							</p>
+						</div>
 
 						<div class="input-field col s4">
 							<input type="submit" value='<fmt:message key="login.button.submit"/>' class="btn"/>
@@ -59,8 +70,6 @@
 				</form>
 			</div>
 		</div>
-
-		<h2>${language.language}</h2>
 
 	</body>
 </html>

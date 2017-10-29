@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:loadBundle var="message" basename="Message"/>
+
+    <h:head>
+        <title>
+            Title
+        </title>
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+        <!--Import materialize.css-->
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"/>
+
+        <!--Let browser know website is optimized for mobile-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <!--<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"/>-->
+        <script type="text/javascript"
+                src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"/>
+
+
+        <script type="text/javascript">
+            function handleAddStudentRequest(xhr, status, args) {
+                console.log(args);
+                if (args.success) {
+                    PF('studentAddWidget').hide();
+                    $('#loginLink').fadeOut();
+                } else {
+                    alert("Failed to add the new student");
+                }
+            }
+        </script>
+
+    </h:head>
+
+    <h:body>
+        <div>
+            <h3 class="center-align">
+                #{message.students_welcome}
+            </h3>
+        </div>
+
+        <div class="container">
+            <h:form id="studentsPage">
+
+
+                <p:dataTable id="students" var="student" value="#{studentBean.students}" rowKey="#{student.id}"
+                             selection="#{studentBean.selectedStudent}" selectionMode="single">
+
+                    <f:facet name="header">
+                        List of Students
+                    </f:facet>
+
+                    <p:column headerText="Id">
+                        <h:outputText value="#{student.id}"/>
+                    </p:column>
+
+                    <p:column headerText="Name">
+                        <h:outputText value="#{student.name}"/>
+                    </p:column>
+
+                    <p:column headerText="Email">
+                        <h:outputText value="#{student.email}"/>
+                    </p:column>
+                    <p:column headerText="Delete">
+                        <p:commandButton id="deleteStudent" icon="fa fa-remove"
+                                         actionListener="#{studentBean.deleteStudent(student)}"/>
+                    </p:column>
+
+                </p:dataTable>
+
+                <p:contextMenu for="students">
+                    <p:menuitem value="Add" icon="fa-plus" onclick="PF('studentAddWidget').show()"/>
+                    <p:menuitem value="Delete" icon="fa fa-remove" actionListener="#{studentBean.deleteStudent}"/>
+                </p:contextMenu>
+
+
+                <p:dialog header="Add Student" widgetVar="studentAddWidget" resizable="false" rendered="true">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputLabel for="studentName" value="Name:"/>
+                        <p:inputText id="studentName" value="#{studentBean.newStudent.name}" required="true"
+                                     label="Name"/>
+
+                        <h:outputLabel for="studentEmail" value="Email:"/>
+                        <p:inputText id="studentEmail" value="#{studentBean.newStudent.email}" required="true"
+                                     label="Email"/>
+
+                        <f:facet name="footer">
+                            <p:commandButton value="Add" update="students" actionListener="#{studentBean.addStudent}"
+                                             oncomplete="handleAddStudentRequest(xhr,status,args)"/>
+                        </f:facet>
+                    </h:panelGrid>
+
+
+                </p:dialog>
+
+            </h:form>
+
+        </div>
+
+    </h:body>
+</html>

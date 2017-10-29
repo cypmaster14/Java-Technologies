@@ -1,5 +1,6 @@
 package org.cypmaster.filters;
 
+import org.cypmaster.services.LoginService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -7,30 +8,37 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Optional;
 
 @WebFilter(urlPatterns = {"/input", "/result", "/home"})
 public class AuthenticationFilter implements Filter {
 
-    private final static String USERNAME_SESSION_NAME = "username";
+    private LoginService loginService;
+    private final static String SESSION_NAME = "username";
+
+
+    private final static String LOGIN_PAGE_LOCATION = "/login";
     private final Logger logger = LoggerFactory.getLogger(AuthenticationFilter.class);
 
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        loginService = LoginService.getInstance();
+    }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
 
-        Optional<HttpSession> session = Optional.of(req.getSession());
-        if (!session.isPresent() || session.get().getAttribute(USERNAME_SESSION_NAME) == null) {
-            logger.info("An unauthorized request");
-            resp.sendRedirect("/login.jsp");
-            return;
-        }
+        String loginURI = req.getContextPath() + LOGIN_PAGE_LOCATION;
+        boolean loginRequest = req.getRequestURI().equals(loginURI);
 
-        logger.info("Authorized request from user:" + session.get().getAttribute(USERNAME_SESSION_NAME));
-        filterChain.doFilter(servletRequest, servletResponse);
+        if (loginService.isAuthenticated(req) || loginRequest) {
+            filterChain.doFilter(req, resp);
+        } else {
+            logger.info("Authorized request from user:" + req.getSession().getAttribute(SESSION_NAME));
+            resp.sendRedirect(LOGIN_PAGE_LOCATION);
+        }
     }
 }

@@ -16,7 +16,7 @@
 		</h2>
 		<h2>
 			Go to
-			<a href="../index.html">
+			<a href="../home.jsp">
 				Home page
 			</a>
 		</h2>

@@ -1,0 +1,18 @@
+package org.cypmaster.DAO;
+
+import org.cypmaster.entities.Skill;
+
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Optional;
+
+public interface SkillDAO {
+
+    void addSkill(Skill skill) throws SQLException;
+
+    List<Skill> getSkills() throws SQLException;
+
+    Optional<Skill> getSkill(int id) throws SQLException;
+
+
+}

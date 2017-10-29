@@ -6,6 +6,18 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+
+<c:set var="language"
+       value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
+       scope="session"/>
+
+
+<fmt:setLocale value="${language}"/>
+<fmt:setBundle basename="text"/>
+
 <html>
 	<head>
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -46,11 +58,13 @@
 			<div class="row">
 				<form action="/query1" method="post" class="col s12">
 					<div class="input-field col s12">
-						<input placeholder="Key" name="key" id="key" type="text">
-						<label for="key">Key</label>
+						<input name="key" id="key" type="text">
+						<label for="key">
+							<fmt:message key="words.table.head2"/>
+						</label>
 					</div>
 					<div class="input-field col s4">
-						<input type="submit" value="Search" class="btn">
+						<input type="submit" value='<fmt:message key="query1.search.button"/>' class="btn">
 					</div>
 				</form>
 			</div>

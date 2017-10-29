@@ -1,6 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="hello" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+
+<c:set var="language"
+       value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
+       scope="session"/>
+
+
+<fmt:setLocale value="${language}"/>
+<fmt:setBundle basename="text"/>
 <html>
 	<head>
 		<title>Input</title>
@@ -51,17 +60,23 @@
 				<form class="col s12" method="post" action="/words">
 					<div class="row">
 						<div class="input-field col s12">
-							<input placeholder="Key" name="key" id="key" type="text"/>
-							<label for="key">Key</label>
+							<input name="key" id="key" type="text"/>
+							<label for="key">
+								<fmt:message key="input.label.key"/>
+							</label>
 						</div>
 						<div class="input-field col s12">
-							<input placeholder="Value" name="value" id="value" type="text">
-							<label for="value">Value</label>
+							<input name="value" id="value" type="text">
+							<label for="value">
+								<fmt:message key="input.label.value"/>
+							</label>
 						</div>
 
 						<div class="input-field col s12">
 							<select name="category">
-								<option value="" disabled selected>Choose your option</option>
+								<option value="" disabled selected>
+									<fmt:message key="input.select.default"/>
+								</option>
 								<c:forEach items="${categories}" var="category">
 									<c:choose>
 										<c:when test="${cookie.categoryId.value==category.id}">
@@ -73,12 +88,12 @@
 									</c:choose>
 								</c:forEach>
 							</select>
-							<label>Materialize Select</label>
+							<label></label>
 						</div>
 
 
 						<div class="input-field col s4">
-							<input type="submit" value="Add" class="btn">
+							<input type="submit" value='<fmt:message key="input.button.submit"/>' class="btn">
 						</div>
 
 						<div class="col s12" style="margin-top: 20px">
