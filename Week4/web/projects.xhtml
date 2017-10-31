@@ -55,12 +55,12 @@
             <h:form id="projectTableForm">
                 <p:growl id="growl" life="2000"/>
 
-                <p:dataTable id="projectsSkills" var="project" value="#{projectBean.projects}" rowKey="#{project.id}"
+                <p:dataTable id="projects" var="project" value="#{projectBean.projects}" rowKey="#{project.id}"
                              selection="#{projectBean.selectedProject}" selectionMode="single">
 
-                    <p:column headerText="Id">
-                        <h:outputText value="#{project.id}"/>
-                    </p:column>
+                    <!--<p:column headerText="Id">-->
+                        <!--<h:outputText value="#{project.id}"/>-->
+                    <!--</p:column>-->
 
                     <p:column headerText="Name">
                         <h:outputText value="#{project.name}"/>
@@ -76,9 +76,9 @@
 
                 </p:dataTable>
 
-                <p:contextMenu for="projectsSkills">
+                <p:contextMenu for="projects">
                     <p:menuitem value="Add" icon="fa-plus" onclick="PF('addProjectWidget').show()"/>
-                    <p:menuitem value="Delete" icon="fa-close" update="projectsSkills growl"
+                    <p:menuitem value="Delete" icon="fa-close" update="projects growl"
                                 actionListener="#{projectBean.removeProject}"/>
                 </p:contextMenu>
 
@@ -99,7 +99,7 @@
 
 
                         <f:facet name="footer">
-                            <p:commandButton value="Add" update="projectsSkills growl"
+                            <p:commandButton value="Add" update="projects growl"
                                              actionListener="#{projectBean.addProject}"
                                              oncomplete="handleAddProjectRequest(xhr,status,args)"/>
                         </f:facet>

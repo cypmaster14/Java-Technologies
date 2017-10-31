@@ -18,6 +18,7 @@ public class SkillDAOImpl implements SkillDAO, Serializable {
     private final static String ADD_SKILL = "INSERT INTO SKILLS (name) VALUES(?)";
     private final static String GET_SKILLS = "SELECT * FROM SKILLS";
     private final static String GET_SKILL_BY_ID = "SELECT * FROM SKILLS WHERE ID=?";
+    private final static String DELETE_SKILL = "DELETE FROM Skills WHERE id=?";
 
 
     public SkillDAOImpl() {
@@ -72,5 +73,16 @@ public class SkillDAOImpl implements SkillDAO, Serializable {
         skill.setId(resultSet.getInt("id"));
         skill.setName(resultSet.getString("name"));
         return Optional.of(skill);
+    }
+
+    @Override
+    public void deleteSkill(Skill skill) throws SQLException {
+
+        PreparedStatement ps = connection.prepareStatement(DELETE_SKILL);
+        ps.setInt(1, skill.getId());
+        int affectedRows = ps.executeUpdate();
+        if (affectedRows == 0) {
+            throw new SQLException("Failed to delete the skill with id:" + skill.getId());
+        }
     }
 }

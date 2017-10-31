@@ -15,7 +15,7 @@ public class StudentDAOImpl implements StudentDAO {
 
     private Connection connection;
     private final static String GET_STUDENTS = "SELECT * FROM Students";
-    private final static String ADD_STUDENT = "INSERT INTO Students(name,email) VALUES(?,?,?)";
+    private final static String INSERT_STUDENT = "INSERT INTO Students(name,email) VALUES(?,?)";
     private final static String GET_STUDENT_SKILLS = "SELECT sk.id,sk.name FROM Students s" +
             "  JOIN Students_Skills ss ON s.id = ss.student_id" +
             "  JOIN Skills sk ON ss.skill_id = sk.id" +
@@ -25,6 +25,7 @@ public class StudentDAOImpl implements StudentDAO {
             "  JOIN Students s ON sp.student_id = s.id" +
             "  WHERE s.id=?" +
             "  ORDER BY sp.level_of_preferences ASC";
+    private final static String DELETE_STUDENT = "DELETE FROM Students WHERE id=?";
 
     public StudentDAOImpl() {
         this.connection = ConnectionUtil.getInstance().connection;
@@ -57,12 +58,21 @@ public class StudentDAOImpl implements StudentDAO {
 
     @Override
     public void addStudent(Student student) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement(ADD_STUDENT);
+        PreparedStatement statement = connection.prepareStatement(INSERT_STUDENT, Statement.RETURN_GENERATED_KEYS);
         statement.setString(1, student.getName());
         statement.setString(2, student.getEmail());
-        statement.execute();
-    }
+        int affectedRows = statement.executeUpdate();
+        if (affectedRows == 0) {
+            throw new SQLException("Failed to insert new Student");
+        }
 
+        ResultSet generatedKeys = statement.getGeneratedKeys();
+        if (generatedKeys.next()) {
+            student.setId(generatedKeys.getInt(1));
+        } else {
+            throw new SQLException("Failed to retrieve the if of the new project");
+        }
+    }
 
     private List<Skill> getStudentSkills(int studentId) {
         try {
@@ -102,4 +112,16 @@ public class StudentDAOImpl implements StudentDAO {
             return Collections.EMPTY_LIST;
         }
     }
+
+    @Override
+    public void deleteStudent(Student student) throws SQLException {
+        PreparedStatement ps = connection.prepareStatement(DELETE_STUDENT);
+        ps.setInt(1, student.getId());
+        int affectedRows = ps.executeUpdate();
+        if (affectedRows == 0) {
+            throw new SQLException("Failed to remove the student");
+        }
+    }
+
+
 }

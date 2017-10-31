@@ -48,4 +48,14 @@ public class SkillService implements Serializable {
             return false;
         }
     }
+
+    public boolean deleteSkill(Skill skill) {
+        try {
+            skillDAO.deleteSkill(skill);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

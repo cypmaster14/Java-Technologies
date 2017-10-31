@@ -55,35 +55,32 @@
                 <p:growl id="growl" life="2000"/>
 
 
-                <p:dataTable id="studentSkills" var="skill" value="#{skillBean.studentSkills}" rowKey="#{skill.id}"
+                <p:dataTable id="studentSkills" var="skill" value="#{skillBean.skills}" rowKey="#{skill.id}"
                              selection="#{skillBean.selectedSkill}" selectionMode="single">
-                    <p:column headerText="Id">
-                        <h:outputText value="#{skill.id}"/>
-                    </p:column>
+                    <!--<p:column headerText="Id">-->
+                        <!--<h:outputText value="#{skill.id}"/>-->
+                    <!--</p:column>-->
 
                     <p:column headerText="Name">
                         <h:outputText value="#{skill.name}"/>
                     </p:column>
 
-                    <p:column styleClass="width:20px text-align:center" headerText="Delete">
-                        <p:commandButton icon="ui-icon-trash" ajax="true" update="studentSkills"
-                                         actionListener="#{skillBean.deleteSkill}"/>
-                    </p:column>
-
-
                 </p:dataTable>
 
 
                 <p:contextMenu for="studentSkills">
-                    <p:menuitem value="Add" icon="fa-plus"
+                    <p:menuitem value="Add" icon="fa-plus" update="studentSkills growl"
                                 onclick="PF('skillAdd').show()"/>
+                    <p:menuitem value="Delete" icon="fa-close" update="studentSkills growl"
+                                actionListener="#{skillBean.deleteSkill}"/>
                 </p:contextMenu>
 
                 <p:dialog header="Add Skill" widgetVar="skillAdd" resizable="false" rendered="true">
                     <h:panelGrid columns="2" cellpadding="5">
                         <h:outputLabel for="skillName" value="Name:"/>
-                        <p:inputText id="skillName" value="#{skillBean.newSkillName}" required="true"
-                                     label="Name"/>
+                        <p:inputText id="skillName" value="#{skillBean.newSkillName}" label="Name">
+                            <f:validateLength minimum="1" maximum="255"/>
+                        </p:inputText>
 
                         <f:facet name="footer">
                             <p:commandButton value="Add" update="studentSkills" actionListener="#{skillBean.addSkill}"

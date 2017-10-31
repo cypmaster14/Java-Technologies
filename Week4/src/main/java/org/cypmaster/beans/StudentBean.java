@@ -5,6 +5,7 @@ import org.cypmaster.services.StudentService;
 import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -32,27 +33,38 @@ public class StudentBean implements Serializable {
 
     }
 
-    public void addStudent() {
+    public void addStudent(ActionEvent event) {
         System.out.println("Adding student:" + newStudent.toString());
-
         RequestContext context = RequestContext.getCurrentInstance();
 
-
-        newStudent.setName("");
-        newStudent.setEmail("");
-        context.addCallbackParam("success", true);
-
-
+        boolean studentWasAdded = studentService.addStudent(newStudent);
+        if (studentWasAdded) {
+            context.addCallbackParam("success", true);
+            addMessage("Student was added", FacesMessage.SEVERITY_INFO);
+            students.add(newStudent);
+            newStudent = new Student();
+        } else {
+            context.addCallbackParam("success", false);
+            addMessage("Some error occurred during the inserting of the user.", FacesMessage.SEVERITY_ERROR);
+        }
     }
 
-    public void deleteStudent() {
+    public void removeStudent(ActionEvent event) {
+
         System.out.println("Deleting student:" + selectedStudent);
+        boolean studentWasRemoved = studentService.removeStudent(selectedStudent);
+        if (studentWasRemoved) {
+            addMessage("Student was removed", FacesMessage.SEVERITY_INFO);
+            students.remove(selectedStudent);
+        } else {
+            addMessage("Some error occurred during the removal of the student", FacesMessage.SEVERITY_ERROR);
+        }
     }
 
-    public void deleteStudent(Student student) {
-        System.out.println("Deleting student:" + student);
+    private void addMessage(String summary, FacesMessage.Severity severity) {
+        FacesMessage message = new FacesMessage(severity, summary, null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
-
 
     public List<Student> getStudents() {
         return students;

@@ -36,8 +36,6 @@
                 if (args.success) {
                     PF('studentAddWidget').hide();
                     $('#loginLink').fadeOut();
-                } else {
-                    alert("Failed to add the new student");
                 }
             }
         </script>
@@ -54,6 +52,7 @@
         <div class="container">
             <h:form id="studentsPage">
 
+                <p:growl id="growl" life="2000"/>
 
                 <p:dataTable id="students" var="student" value="#{studentBean.students}" rowKey="#{student.id}"
                              selection="#{studentBean.selectedStudent}" selectionMode="single">
@@ -62,9 +61,9 @@
                         List of Students
                     </f:facet>
 
-                    <p:column headerText="Id">
-                        <h:outputText value="#{student.id}"/>
-                    </p:column>
+                    <!--<p:column headerText="Id">-->
+                        <!--<h:outputText value="#{student.id}"/>-->
+                    <!--</p:column>-->
 
                     <p:column headerText="Name">
                         <h:outputText value="#{student.name}"/>
@@ -73,16 +72,13 @@
                     <p:column headerText="Email">
                         <h:outputText value="#{student.email}"/>
                     </p:column>
-                    <p:column headerText="Delete">
-                        <p:commandButton id="deleteStudent" icon="fa fa-remove"
-                                         actionListener="#{studentBean.deleteStudent(student)}"/>
-                    </p:column>
 
                 </p:dataTable>
 
                 <p:contextMenu for="students">
                     <p:menuitem value="Add" icon="fa-plus" onclick="PF('studentAddWidget').show()"/>
-                    <p:menuitem value="Delete" icon="fa fa-remove" actionListener="#{studentBean.deleteStudent}"/>
+                    <p:menuitem value="Delete" icon="fa-close" update="students growl"
+                                actionListener="#{studentBean.removeStudent}"/>
                 </p:contextMenu>
 
 
@@ -90,14 +86,23 @@
                     <h:panelGrid columns="2" cellpadding="5">
                         <h:outputLabel for="studentName" value="Name:"/>
                         <p:inputText id="studentName" value="#{studentBean.newStudent.name}" required="true"
-                                     label="Name"/>
+                                     label="Name">
+                            <f:validateLength minimum="1" maximum="255"/>
+                        </p:inputText>
+
 
                         <h:outputLabel for="studentEmail" value="Email:"/>
                         <p:inputText id="studentEmail" value="#{studentBean.newStudent.email}" required="true"
-                                     label="Email"/>
+                                     label="Email">
+                            <f:validator validatorId="org.cypmaster.EmailValidator"/>
+                        </p:inputText>
+
+                        <h:message for="studentEmail" style="color: red;"/>
+
 
                         <f:facet name="footer">
-                            <p:commandButton value="Add" update="students" actionListener="#{studentBean.addStudent}"
+                            <p:commandButton value="Add" update="students growl"
+                                             actionListener="#{studentBean.addStudent}"
                                              oncomplete="handleAddStudentRequest(xhr,status,args)"/>
                         </f:facet>
                     </h:panelGrid>

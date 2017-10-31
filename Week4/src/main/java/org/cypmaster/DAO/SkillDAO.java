@@ -14,5 +14,7 @@ public interface SkillDAO {
 
     Optional<Skill> getSkill(int id) throws SQLException;
 
+    void deleteSkill(Skill skill) throws SQLException;
+
 
 }

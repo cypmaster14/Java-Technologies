@@ -29,4 +29,13 @@ public class ProjectSkills {
     public void setLevelOfPreference(int levelOfPreference) {
         this.levelOfPreference = levelOfPreference;
     }
+
+    @Override
+    public String toString() {
+        return "ProjectSkills{" +
+                "projectId=" + projectId +
+                ", skillId=" + skillId +
+                ", levelOfPreference=" + levelOfPreference +
+                '}';
+    }
 }

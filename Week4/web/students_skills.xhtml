@@ -64,16 +64,14 @@
                         <p:outputLabel for="studentList" value="Student:"/>
                         <p:selectOneMenu id="studentList" value="#{studentsSkillBean.selectedStudentId}"
                                          style="width: 150px">
+                            <p:ajax listener="#{studentsSkillBean.selectStudent}" update="studentSkills"/>
                             <f:selectItem itemLabel="Select Student Id" itemValue="" noSelectionOption="true"/>
-                            <f:selectItems value="#{studentsSkillBean.studentsForSelect}"/>
+                            <f:selectItems value="#{studentsSkillBean.studentsForSelect.entrySet()}" var="student"
+                                           itemValue="#{student.key}" itemLabel="#{student.value}"/>
                         </p:selectOneMenu>
                     </h:panelGrid>
 
                     <p:separator/>
-
-                    <p:commandButton value="Get Skills" actionListener="#{studentsSkillBean.onStudentSelected}"
-                                     icon="ui-icon-check" update="studentSkills"/>
-
                 </p:panel>
 
                 <div>
@@ -88,10 +86,6 @@
                         Skills
                     </f:facet>
 
-                    <p:column headerText="Id">
-                        <h:outputText value="#{studentSkill.id}"/>
-                    </p:column>
-
                     <p:column headerText="Name">
                         <h:outputText value="#{studentSkill.name}"/>
                     </p:column>
@@ -100,17 +94,21 @@
                 <p:contextMenu for="studentSkills">
                     <p:menuitem value="Add" icon="fa-plus" onclick="PF('addSkillToStudent').show()"/>
                     <p:menuitem value="Delete" icon="fa fa-remove" actionListener="#{studentsSkillBean.removeSkill}"
-                                update="studentSkills"/>
+                                update="studentSkills growl"/>
                 </p:contextMenu>
 
                 <p:dialog header="Add Skill to Student" widgetVar="addSkillToStudent" resizable="false" rendered="true">
                     <h:panelGrid columns="2" cellpadding="5">
-                        <h:outputLabel for="skillId" value="Skill Id:"/>
-                        <p:inputText id="skillId" value="#{studentsSkillBean.newSkillId}" required="true"
-                                     label="SkillId"/>
+                        <p:outputLabel for="skills" value="Skill:"/>
+                        <p:selectOneMenu id="skills" value="#{studentsSkillBean.newSkillIdOfStudent}"
+                                         style="width: 150px">
+                            <f:selectItem itemLabel="Select Skill" itemValue="" noSelectionOption="true"/>
+                            <f:selectItems value="#{studentsSkillBean.skills}" var="skill" itemValue="#{skill.id}"
+                                           itemLabel="#{skill.name}"/>
+                        </p:selectOneMenu>
 
                         <f:facet name="footer">
-                            <p:commandButton value="Add" update="studentSkills"
+                            <p:commandButton value="Add" update="studentSkills growl"
                                              actionListener="#{studentsSkillBean.addSkill}"
                                              oncomplete="handleAddSkillToStudentRequest(xhr,status,args)"/>
                         </f:facet>

@@ -10,4 +10,6 @@ public interface StudentDAO {
     List<Student> getStudents() throws SQLException;
 
     void addStudent(Student student) throws SQLException;
+
+    void deleteStudent(Student student) throws SQLException;
 }

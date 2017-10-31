@@ -9,6 +9,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import java.io.Serializable;
 import java.util.List;
 
@@ -25,8 +26,37 @@ public class SkillBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        skillService = SkillService.getInstance();
-        skills = skillService.getSkills();
+        this.skillService = SkillService.getInstance();
+        this.skills = skillService.getSkills();
+    }
+
+    public void addSkill() {
+        System.out.println("Add skill:" + newSkillName);
+        Skill newSkill = new Skill();
+        newSkill.setName(newSkillName);
+
+        boolean skillAdded = skillService.addSkill(newSkill);
+        RequestContext context = RequestContext.getCurrentInstance();
+        if (skillAdded) {
+            skills.add(newSkill);
+            addMessage("Skill added", FacesMessage.SEVERITY_INFO);
+            context.addCallbackParam("success", true);
+        } else {
+            addMessage("Failed to add the skill", FacesMessage.SEVERITY_ERROR);
+            newSkillName = "";
+            context.addCallbackParam("success", false);
+        }
+    }
+
+    public void deleteSkill() {
+        System.out.printf("Delete skill:%s", selectedSkill);
+        boolean skillWasDeleted = skillService.deleteSkill(selectedSkill);
+        if (skillWasDeleted) {
+            addMessage("Skill was deleted", FacesMessage.SEVERITY_INFO);
+            skills.remove(selectedSkill);
+        } else {
+            addMessage("Some error occurred during the deletion of skill", FacesMessage.SEVERITY_ERROR);
+        }
     }
 
     public List<Skill> getSkills() {
@@ -51,31 +81,6 @@ public class SkillBean implements Serializable {
 
     public void setNewSkillName(String newSkillName) {
         this.newSkillName = newSkillName;
-    }
-
-    public void addSkill() {
-        System.out.println("Add skill:" + newSkillName);
-        Skill newSkill = new Skill();
-        newSkill.setName(newSkillName);
-
-        boolean skillAdded = skillService.addSkill(newSkill);
-        RequestContext context = RequestContext.getCurrentInstance();
-        if (skillAdded) {
-            skills.add(newSkill);
-            addMessage("Skill added", FacesMessage.SEVERITY_INFO);
-            context.addCallbackParam("success", true);
-        } else {
-            addMessage("Failed to add the skill", FacesMessage.SEVERITY_ERROR);
-            newSkillName = "";
-            context.addCallbackParam("success", false);
-        }
-    }
-
-    public void deleteSkill() {
-        int x = 0;
-        System.out.println(selectedSkill);
-        skills.remove(selectedSkill);
-        selectedSkill = null;
     }
 
     public void addMessage(String summary, FacesMessage.Severity severity) {

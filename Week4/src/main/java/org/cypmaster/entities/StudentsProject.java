@@ -32,7 +32,7 @@ public class StudentsProject {
 
     @Override
     public String toString() {
-        return "StudentsProject{" +
+        return "StudentsSkillDAO{" +
                 "studentId=" + studentId +
                 ", projectId=" + projectId +
                 ", levelOfPreferences=" + levelOfPreferences +

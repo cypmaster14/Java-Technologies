@@ -35,10 +35,7 @@ public class StudentService {
         }
     }
 
-    public boolean addStudent(String name, String email) {
-        Student student = new Student();
-        student.setName(name);
-        student.setEmail(email);
+    public boolean addStudent(Student student) {
         try {
             studentDAO.addStudent(student);
             return true;
@@ -46,5 +43,16 @@ public class StudentService {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public boolean removeStudent(Student student) {
+        try {
+            studentDAO.deleteStudent(student);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 }
