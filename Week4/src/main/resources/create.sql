@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS Projects;
 CREATE TABLE Skills (
 
   id   INTEGER AUTO_INCREMENT NOT NULL  PRIMARY KEY,
-  name VARCHAR(255)           NOT NULL
+  name VARCHAR(255)           NOT NULL UNIQUE
 );
 
 CREATE TABLE Students (
@@ -42,7 +42,8 @@ CREATE TABLE Projects_Skills (
   level_of_preferences INTEGER NOT NULL,
   CONSTRAINT Projects_Skills_PK PRIMARY KEY (project_id, skill_id),
   CONSTRAINT Projects_Skills_project_id_fk FOREIGN KEY (project_id) REFERENCES Projects (id),
-  CONSTRAINT Projects_Skills_skill_id_fk FOREIGN KEY (skill_id) REFERENCES Skills (id)
+  CONSTRAINT Projects_Skills_skill_id_fk FOREIGN KEY (skill_id) REFERENCES Skills (id),
+  CONSTRAINT Projects_Skills_project_preference_unique UNIQUE (project_id, level_of_preferences)
 );
 
 CREATE TABLE Students_Projects (
@@ -61,4 +62,6 @@ CREATE TABLE Assignments (
   CONSTRAINT Assignments_student_id_fk FOREIGN KEY (student_id) REFERENCES Students (id),
   CONSTRAINT Assignments_project_id_fk FOREIGN KEY (project_id) REFERENCES Projects (id)
 );
+
+
 

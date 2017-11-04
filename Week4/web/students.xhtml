@@ -40,14 +40,23 @@
             }
         </script>
 
+        <h:outputStylesheet name="footer.css" library="css"/>
+        <h:outputStylesheet name="table.css" library="css"/>
+
     </h:head>
 
     <h:body>
+
+        <ui:insert name="header">
+            <ui:include src="WEB-INF/templates/menubar.xhtml"/>
+        </ui:insert>
+
         <div>
             <h3 class="center-align">
                 #{message.students_welcome}
             </h3>
         </div>
+
 
         <div class="container">
             <h:form id="studentsPage">
@@ -55,22 +64,42 @@
                 <p:growl id="growl" life="2000"/>
 
                 <p:dataTable id="students" var="student" value="#{studentBean.students}" rowKey="#{student.id}"
-                             selection="#{studentBean.selectedStudent}" selectionMode="single">
+                             selection="#{studentBean.selectedStudent}" selectionMode="single" editable="true">
 
                     <f:facet name="header">
                         List of Students
                     </f:facet>
 
-                    <!--<p:column headerText="Id">-->
-                        <!--<h:outputText value="#{student.id}"/>-->
-                    <!--</p:column>-->
+                    <p:ajax event="rowEdit" listener="#{studentBean.onStudentEditSave}" update=":studentsPage:growl"/>
+                    <p:ajax event="rowEditCancel" listener="#{studentBean.onStudentEditCancel}"
+                            update=":studentsPage:growl"/>
 
-                    <p:column headerText="Name">
-                        <h:outputText value="#{student.name}"/>
+                    <p:column headerText="Name" sortBy="#{student.name}" filterBy="#{student.name}"
+                              filterMatchMode="contains">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{student.name}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText id="nameInput" value="#{student.name}" style="width: 100%"/>
+                            </f:facet>
+                        </p:cellEditor>
                     </p:column>
 
-                    <p:column headerText="Email">
-                        <h:outputText value="#{student.email}"/>
+                    <p:column headerText="Email" sortBy="#{student.email}" filterBy="#{student.email}"
+                              filterMatchMode="contains">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{student.email}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{student.email}" style="width: 100%" label="Email"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column style="width: 32px">
+                        <p:rowEditor/>
                     </p:column>
 
                 </p:dataTable>
@@ -111,8 +140,11 @@
                 </p:dialog>
 
             </h:form>
-
         </div>
+
+        <ui:insert name="footer">
+            <ui:include src="WEB-INF/templates/footer.xhtml"/>
+        </ui:insert>
 
     </h:body>
 </html>

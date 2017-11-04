@@ -3,6 +3,7 @@ package org.cypmaster.beans;
 import org.cypmaster.entities.Skill;
 import org.cypmaster.services.SkillService;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.RowEditEvent;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -58,6 +59,19 @@ public class SkillBean implements Serializable {
             addMessage("Some error occurred during the deletion of skill", FacesMessage.SEVERITY_ERROR);
         }
     }
+
+
+    public void onEditSkillSave(RowEditEvent event) {
+        Skill skill = (Skill) event.getObject();
+        System.out.println("[Skill Edit]" + skill);
+        addMessage("Edit Skill:" + skill.getName(), FacesMessage.SEVERITY_INFO);
+    }
+
+    public void onEditSkillCancel(RowEditEvent event) {
+        Skill skill = (Skill) event.getObject();
+        addMessage("Edit Canceled:" + skill.getName(), FacesMessage.SEVERITY_INFO);
+    }
+
 
     public List<Skill> getSkills() {
         return skills;

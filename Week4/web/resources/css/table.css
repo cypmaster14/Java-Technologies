@@ -1,0 +1,7 @@
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+    background-color: #860015 !important;
+}
+
+.ui-cell-editor-input > .ui-inputfield {
+    color: white !important;
+}

@@ -3,6 +3,7 @@ package org.cypmaster.beans;
 import org.cypmaster.entities.Student;
 import org.cypmaster.services.StudentService;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.RowEditEvent;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -59,6 +60,18 @@ public class StudentBean implements Serializable {
         } else {
             addMessage("Some error occurred during the removal of the student", FacesMessage.SEVERITY_ERROR);
         }
+    }
+
+
+    public void onStudentEditSave(RowEditEvent event) {
+        Student studentModified = (Student) event.getObject();
+        System.out.println("[Student Edit]" + studentModified);
+        addMessage("Edit Student:" + studentModified.getName(), FacesMessage.SEVERITY_INFO);
+    }
+
+    public void onStudentEditCancel(RowEditEvent event) {
+        Student studentModified = (Student) event.getObject();
+        addMessage("Edit Cancelled:" + studentModified.getName(), FacesMessage.SEVERITY_INFO);
     }
 
     private void addMessage(String summary, FacesMessage.Severity severity) {

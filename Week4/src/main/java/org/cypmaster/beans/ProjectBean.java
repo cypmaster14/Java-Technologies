@@ -3,6 +3,7 @@ package org.cypmaster.beans;
 import org.cypmaster.entities.Project;
 import org.cypmaster.services.ProjectService;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.RowEditEvent;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -10,12 +11,14 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
+import java.io.Serializable;
 import java.util.List;
 
 @ManagedBean(name = "projectBean")
 @ViewScoped
-public class ProjectBean {
+public class ProjectBean implements Serializable {
 
+    private final static Long serialVersionUID = 1L;
     private ProjectService projectService;
 
     private List<Project> projects;
@@ -41,11 +44,6 @@ public class ProjectBean {
         }
     }
 
-    private void addMessage(String summary, FacesMessage.Severity severity) {
-        FacesMessage message = new FacesMessage(severity, summary, null);
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
-
     public void addProject() {
         System.out.println("Add project:" + newProject.toString());
 
@@ -63,6 +61,23 @@ public class ProjectBean {
     }
 
 
+    public void onProjectEditSave(RowEditEvent event) {
+        Project projectEdited = (Project) event.getObject();
+        System.out.println("[Edit Project]" + projectEdited);
+        addMessage("Edit Project:" + projectEdited.getName(), FacesMessage.SEVERITY_INFO);
+    }
+
+    public void onProjectEditCancel(RowEditEvent event) {
+        Project projectEdited = (Project) event.getObject();
+        System.out.println("[Edit Project]" + projectEdited);
+        addMessage("Edit Cancelled:" + projectEdited.getName(), FacesMessage.SEVERITY_INFO);
+    }
+
+    private void addMessage(String summary, FacesMessage.Severity severity) {
+        FacesMessage message = new FacesMessage(severity, summary, null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
     public List<Project> getProjects() {
         return projects;
     }
@@ -70,7 +85,6 @@ public class ProjectBean {
     public void setProjects(List<Project> projects) {
         this.projects = projects;
     }
-
 
     public Project getSelectedProject() {
         return selectedProject;

@@ -1,8 +1,11 @@
 package org.cypmaster.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Project {
+public class Project implements Serializable {
+
+    private final static Long serialVersionUID = 1L;
 
     private int id;
     private String name;

@@ -5,6 +5,12 @@
     http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
 
 
+    <managed-bean>
+        <managed-bean-name>currentDate</managed-bean-name>
+        <managed-bean-class>java.util.Date</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+
     <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
 
@@ -31,6 +37,11 @@
         <navigation-case>
             <from-outcome>goToProjectsSkills</from-outcome>
             <to-view-id>/projects_skills.xhtml?faces-redirect=true</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>goToHomePage</from-outcome>
+            <to-view-id>/index.xhtml?faces-redirect=true</to-view-id>
         </navigation-case>
 
     </navigation-rule>

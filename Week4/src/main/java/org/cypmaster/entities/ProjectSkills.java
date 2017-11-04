@@ -1,6 +1,10 @@
 package org.cypmaster.entities;
 
-public class ProjectSkills {
+import java.io.Serializable;
+
+public class ProjectSkills implements Serializable {
+
+    private final static Long serialVersionUID = 1L;
 
     private int projectId;
     private int skillId;

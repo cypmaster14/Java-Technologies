@@ -41,6 +41,9 @@
                 }
             }
         </script>
+
+        <h:outputStylesheet name="footer.css" library="css"/>
+        <h:outputStylesheet name="table.css" library="css"/>
     </h:head>
 
     <h:body>
@@ -51,18 +54,31 @@
         </div>
 
         <div class="container">
-            <h:form id="skillsTableForm">
+            <h:form id="skillsForm">
                 <p:growl id="growl" life="2000"/>
 
 
                 <p:dataTable id="studentSkills" var="skill" value="#{skillBean.skills}" rowKey="#{skill.id}"
-                             selection="#{skillBean.selectedSkill}" selectionMode="single">
-                    <!--<p:column headerText="Id">-->
-                        <!--<h:outputText value="#{skill.id}"/>-->
-                    <!--</p:column>-->
+                             selection="#{skillBean.selectedSkill}" selectionMode="single" editable="true">
 
-                    <p:column headerText="Name">
-                        <h:outputText value="#{skill.name}"/>
+                    <p:ajax event="rowEdit" listener="#{skillBean.onEditSkillSave}" update=":skillsForm:growl"/>
+                    <p:ajax event="rowEditCancel" listener="#{skillBean.onEditSkillCancel}" update=":skillsForm:growl"/>
+
+
+                    <p:column headerText="Name" sortBy="#{skill.name}" filterBy="#{skill.name}"
+                              filterMatchMode="contains">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{skill.name}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText id="skillEditName" value="#{skill.name}" style="width: 100%"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column style="width: 32px">
+                        <p:rowEditor/>
                     </p:column>
 
                 </p:dataTable>
@@ -90,9 +106,12 @@
                     </h:panelGrid>
                 </p:dialog>
 
-
             </h:form>
 
         </div>
+
+        <ui:insert name="footer">
+            <ui:include src="WEB-INF/templates/footer.xhtml"/>
+        </ui:insert>
     </h:body>
 </html>
