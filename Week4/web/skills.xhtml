@@ -6,7 +6,9 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ez="http://java.sun.com/jsf/composite/components"
+>
 
 
     <f:loadBundle var="message" basename="Message"/>
@@ -30,28 +32,14 @@
         <script type="text/javascript"
                 src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"/>
 
-        <script type="text/javascript">
-            function handleAddSkillRequest(xhr, status, args) {
-                if (!args.success) {
-                    PF('skillAdd').jq.effect("shake", {times: 5}, 100);
-                }
-                else {
-                    PF('skillAdd').hide();
-                    $('#loginLink').fadeOut();
-                }
-            }
-        </script>
-
-        <h:outputStylesheet name="footer.css" library="css"/>
-        <h:outputStylesheet name="table.css" library="css"/>
+        <h:outputStylesheet library="css" name="footer.css"/>
+        <h:outputStylesheet library="css" name="table.css"/>
+        <h:outputScript library="js" name="projects.js"/>
     </h:head>
 
     <h:body>
-        <div>
-            <h3 class="center-align">
-                #{message.skills_welcome}
-            </h3>
-        </div>
+
+        <ez:header message="#{msg.skills_page}"/>
 
         <div class="container">
             <h:form id="skillsForm">

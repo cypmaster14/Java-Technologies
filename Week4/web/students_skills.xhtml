@@ -6,7 +6,9 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ez="http://java.sun.com/jsf/composite/components"
+>
 
     <f:loadBundle var="message" basename="Message"/>
 
@@ -30,28 +32,15 @@
                 src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"/>
 
 
-        <script type="text/javascript">
-
-            function handleAddSkillToStudentRequest(xhr, status, args) {
-                if (args.success) {
-                    PF('addSkillToStudent').hide();
-                    $('#loginLink').fadeOut();
-                } else {
-                    alert("Failed to add the skill to student");
-                }
-
-            }
-        </script>
+        <h:outputStylesheet library="css" name="table.css"/>
+        <h:outputStylesheet library="css" name="footer.css"/>
+        <h:outputScript library="js" name="students_skills.js"/>
 
     </h:head>
 
     <h:body>
 
-        <div>
-            <h3 class="center-align">
-                #{message.students_skills_welcome}
-            </h3>
-        </div>
+        <ez:header message="#{msg.students_skills_page}"/>
 
         <div class="container">
 
@@ -119,6 +108,10 @@
             </h:form>
 
         </div>
+
+        <ui:insert name="footer">
+            <ui:include src="WEB-INF/templates/footer.xhtml"/>
+        </ui:insert>
 
     </h:body>
 

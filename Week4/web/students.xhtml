@@ -6,7 +6,9 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ez="http://java.sun.com/jsf/composite/components"
+>
 
     <f:loadBundle var="message" basename="Message"/>
 
@@ -30,33 +32,19 @@
                 src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"/>
 
 
-        <script type="text/javascript">
-            function handleAddStudentRequest(xhr, status, args) {
-                console.log(args);
-                if (args.success) {
-                    PF('studentAddWidget').hide();
-                    $('#loginLink').fadeOut();
-                }
-            }
-        </script>
-
-        <h:outputStylesheet name="footer.css" library="css"/>
-        <h:outputStylesheet name="table.css" library="css"/>
+        <h:outputStylesheet library="css" name="footer.css"/>
+        <h:outputStylesheet library="css" name="table.css"/>
+        <h:outputScript library="js" name="students.js"/>
 
     </h:head>
 
     <h:body>
 
-        <ui:insert name="header">
-            <ui:include src="WEB-INF/templates/menubar.xhtml"/>
-        </ui:insert>
+        <h:form id="unloadForm">
+            <p:remoteCommand action="#{studentBean.leavesPage}" id="leaveButton" style="display: none"/>
+        </h:form>
 
-        <div>
-            <h3 class="center-align">
-                #{message.students_welcome}
-            </h3>
-        </div>
-
+        <ez:header message="#{msg.students_page}"/>
 
         <div class="container">
             <h:form id="studentsPage">
@@ -141,6 +129,11 @@
 
             </h:form>
         </div>
+
+        <h:form id="pollForm">
+            <p:poll interval="10" listener="${studentBean.getUsersOnPage}" update=":studentsPage:growl"/>
+
+        </h:form>
 
         <ui:insert name="footer">
             <ui:include src="WEB-INF/templates/footer.xhtml"/>

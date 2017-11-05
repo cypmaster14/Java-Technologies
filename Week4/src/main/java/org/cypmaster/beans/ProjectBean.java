@@ -2,10 +2,12 @@ package org.cypmaster.beans;
 
 import org.cypmaster.entities.Project;
 import org.cypmaster.services.ProjectService;
+import org.cypmaster.utils.UserTracking;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
@@ -19,6 +21,8 @@ import java.util.List;
 public class ProjectBean implements Serializable {
 
     private final static Long serialVersionUID = 1L;
+    private final static String CURRENT_PAGE = "projectsPage";
+
     private ProjectService projectService;
 
     private List<Project> projects;
@@ -30,6 +34,14 @@ public class ProjectBean implements Serializable {
         this.projectService = ProjectService.getInstance();
         this.projects = projectService.getProjects();
         this.newProject = new Project();
+        String sessionID = getSessionId();
+        UserTracking.userEnteredPage(CURRENT_PAGE, sessionID);
+    }
+
+    @PreDestroy
+    public void destroy() {
+        String sessionID = getSessionId();
+        UserTracking.userLeavedPage(CURRENT_PAGE, sessionID);
     }
 
     public void removeProject(ActionEvent event) {
@@ -76,6 +88,10 @@ public class ProjectBean implements Serializable {
     private void addMessage(String summary, FacesMessage.Severity severity) {
         FacesMessage message = new FacesMessage(severity, summary, null);
         FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
+    private String getSessionId() {
+        return FacesContext.getCurrentInstance().getExternalContext().getSessionId(true);
     }
 
     public List<Project> getProjects() {

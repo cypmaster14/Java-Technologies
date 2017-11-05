@@ -6,7 +6,9 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ez="http://java.sun.com/jsf/composite/components"
+>
 
     <f:loadBundle var="message" basename="Message"/>
 
@@ -29,30 +31,17 @@
         <script type="text/javascript"
                 src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"/>
 
-        <script type="text/javascript">
-            function handleAddProjectRequest(xhr, status, args) {
-                console.log(args);
-                if (args.success) {
-                    PF('addProjectWidget').hide();
-                    $('#loginLink').fadeOut();
-                } else {
-                    alert("Failed to add the new student");
-                }
-            }
-        </script>
 
-        <h:outputStylesheet name="footer.css" library="css"/>
-        <h:outputStylesheet name="table.css" library="css"/>
+        <h:outputStylesheet library="css" name="footer.css"/>
+        <h:outputStylesheet library="css" name="table.css"/>
+        <h:outputScript library="js" name="projects.js"/>
 
 
     </h:head>
 
     <h:body>
-        <div>
-            <h3 class="center-align">
-                #{message.projects_page}
-            </h3>
-        </div>
+
+        <ez:header message="#{msg.projects_page}"/>
 
         <div class="container">
 

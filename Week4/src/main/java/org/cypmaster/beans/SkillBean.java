@@ -2,10 +2,12 @@ package org.cypmaster.beans;
 
 import org.cypmaster.entities.Skill;
 import org.cypmaster.services.SkillService;
+import org.cypmaster.utils.UserTracking;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -19,6 +21,7 @@ import java.util.List;
 public class SkillBean implements Serializable {
 
     private final static Long serialVersionUID = 1L;
+    private final static String CURRENT_PAGE = "skillsPage";
 
     private SkillService skillService;
     private List<Skill> skills;
@@ -29,6 +32,14 @@ public class SkillBean implements Serializable {
     public void init() {
         this.skillService = SkillService.getInstance();
         this.skills = skillService.getSkills();
+        String sessionID = getSessionId();
+        UserTracking.userEnteredPage(CURRENT_PAGE, sessionID);
+    }
+
+    @PreDestroy
+    public void destroy() {
+        String sessionId = getSessionId();
+        UserTracking.userLeavedPage(CURRENT_PAGE, sessionId);
     }
 
     public void addSkill() {
@@ -72,6 +83,10 @@ public class SkillBean implements Serializable {
         addMessage("Edit Canceled:" + skill.getName(), FacesMessage.SEVERITY_INFO);
     }
 
+
+    private String getSessionId() {
+        return FacesContext.getCurrentInstance().getExternalContext().getSessionId(true);
+    }
 
     public List<Skill> getSkills() {
         return skills;
