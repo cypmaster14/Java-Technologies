@@ -46,94 +46,9 @@
 
         <ez:header message="#{msg.students_page}"/>
 
-        <div class="container">
-            <h:form id="studentsPage">
+        <ez:dataView dataViewValuesSelection="#{studentBean.selectedStudent}" dataViewHeader="List Of Students"
+                     dataViewValues="#{studentBean.students}" dataViewHasNameColumn="true"/>
 
-                <p:growl id="growl" life="2000"/>
-
-                <p:dataTable id="students" var="student" value="#{studentBean.students}" rowKey="#{student.id}"
-                             selection="#{studentBean.selectedStudent}" selectionMode="single" editable="true">
-
-                    <f:facet name="header">
-                        List of Students
-                    </f:facet>
-
-                    <p:ajax event="rowEdit" listener="#{studentBean.onStudentEditSave}" update=":studentsPage:growl"/>
-                    <p:ajax event="rowEditCancel" listener="#{studentBean.onStudentEditCancel}"
-                            update=":studentsPage:growl"/>
-
-                    <p:column headerText="Name" sortBy="#{student.name}" filterBy="#{student.name}"
-                              filterMatchMode="contains">
-                        <p:cellEditor>
-                            <f:facet name="output">
-                                <h:outputText value="#{student.name}"/>
-                            </f:facet>
-                            <f:facet name="input">
-                                <p:inputText id="nameInput" value="#{student.name}" style="width: 100%"/>
-                            </f:facet>
-                        </p:cellEditor>
-                    </p:column>
-
-                    <p:column headerText="Email" sortBy="#{student.email}" filterBy="#{student.email}"
-                              filterMatchMode="contains">
-                        <p:cellEditor>
-                            <f:facet name="output">
-                                <h:outputText value="#{student.email}"/>
-                            </f:facet>
-                            <f:facet name="input">
-                                <p:inputText value="#{student.email}" style="width: 100%" label="Email"/>
-                            </f:facet>
-                        </p:cellEditor>
-                    </p:column>
-
-                    <p:column style="width: 32px">
-                        <p:rowEditor/>
-                    </p:column>
-
-                </p:dataTable>
-
-                <p:contextMenu for="students">
-                    <p:menuitem value="Add" icon="fa-plus" onclick="PF('studentAddWidget').show()"/>
-                    <p:menuitem value="Delete" icon="fa-close" update="students growl"
-                                actionListener="#{studentBean.removeStudent}"/>
-                </p:contextMenu>
-
-
-                <p:dialog header="Add Student" widgetVar="studentAddWidget" resizable="false" rendered="true">
-                    <h:panelGrid columns="2" cellpadding="5">
-                        <h:outputLabel for="studentName" value="Name:"/>
-                        <p:inputText id="studentName" value="#{studentBean.newStudent.name}" required="true"
-                                     label="Name">
-                            <f:validateLength minimum="1" maximum="255"/>
-                        </p:inputText>
-
-
-                        <h:outputLabel for="studentEmail" value="Email:"/>
-                        <p:inputText id="studentEmail" value="#{studentBean.newStudent.email}" required="true"
-                                     label="Email">
-                            <f:validator validatorId="org.cypmaster.EmailValidator"/>
-                        </p:inputText>
-
-                        <h:message for="studentEmail" style="color: red;"/>
-
-
-                        <f:facet name="footer">
-                            <p:commandButton value="Add" update="students growl"
-                                             actionListener="#{studentBean.addStudent}"
-                                             oncomplete="handleAddStudentRequest(xhr,status,args)"/>
-                        </f:facet>
-                    </h:panelGrid>
-
-
-                </p:dialog>
-
-            </h:form>
-        </div>
-
-        <h:form id="pollForm">
-            <p:poll interval="10" listener="${studentBean.getUsersOnPage}" update=":studentsPage:growl"/>
-
-        </h:form>
 
         <ui:insert name="footer">
             <ui:include src="WEB-INF/templates/footer.xhtml"/>

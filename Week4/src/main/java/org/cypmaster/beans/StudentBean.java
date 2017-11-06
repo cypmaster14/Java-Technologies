@@ -45,46 +45,6 @@ public class StudentBean implements Serializable {
         UserTracking.userLeavedPage(CURRENT_PAGE, sessionID);
     }
 
-
-    public void addStudent(ActionEvent event) {
-        System.out.println("Adding student:" + newStudent.toString());
-        RequestContext context = RequestContext.getCurrentInstance();
-
-        boolean studentWasAdded = studentService.addStudent(newStudent);
-        if (studentWasAdded) {
-            context.addCallbackParam("success", true);
-            addMessage("Student was added", FacesMessage.SEVERITY_INFO);
-            students.add(newStudent);
-            newStudent = new Student();
-        } else {
-            context.addCallbackParam("success", false);
-            addMessage("Some error occurred during the inserting of the user.", FacesMessage.SEVERITY_ERROR);
-        }
-    }
-
-    public void removeStudent(ActionEvent event) {
-
-        System.out.println("Deleting student:" + selectedStudent);
-        boolean studentWasRemoved = studentService.removeStudent(selectedStudent);
-        if (studentWasRemoved) {
-            addMessage("Student was removed", FacesMessage.SEVERITY_INFO);
-            students.remove(selectedStudent);
-        } else {
-            addMessage("Some error occurred during the removal of the student", FacesMessage.SEVERITY_ERROR);
-        }
-    }
-
-    public void onStudentEditSave(RowEditEvent event) {
-        Student studentModified = (Student) event.getObject();
-        System.out.println("[Student Edit]" + studentModified);
-        addMessage("Edit Student:" + studentModified.getName(), FacesMessage.SEVERITY_INFO);
-    }
-
-    public void onStudentEditCancel(RowEditEvent event) {
-        Student studentModified = (Student) event.getObject();
-        addMessage("Edit Cancelled:" + studentModified.getName(), FacesMessage.SEVERITY_INFO);
-    }
-
     public void leavesPage() {
         System.out.printf("Leaving Page:%s\n", CURRENT_PAGE);
     }

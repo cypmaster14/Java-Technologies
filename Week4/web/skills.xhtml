@@ -41,62 +41,9 @@
 
         <ez:header message="#{msg.skills_page}"/>
 
-        <div class="container">
-            <h:form id="skillsForm">
-                <p:growl id="growl" life="2000"/>
+        <ez:dataView dataViewValuesSelection="#{skillBean.selectedSkill}" dataViewHeader="List of Skills"
+                     dataViewValues="#{skillBean.skills}" dataViewHasNameColumn="true"/>
 
-
-                <p:dataTable id="studentSkills" var="skill" value="#{skillBean.skills}" rowKey="#{skill.id}"
-                             selection="#{skillBean.selectedSkill}" selectionMode="single" editable="true">
-
-                    <p:ajax event="rowEdit" listener="#{skillBean.onEditSkillSave}" update=":skillsForm:growl"/>
-                    <p:ajax event="rowEditCancel" listener="#{skillBean.onEditSkillCancel}" update=":skillsForm:growl"/>
-
-
-                    <p:column headerText="Name" sortBy="#{skill.name}" filterBy="#{skill.name}"
-                              filterMatchMode="contains">
-                        <p:cellEditor>
-                            <f:facet name="output">
-                                <h:outputText value="#{skill.name}"/>
-                            </f:facet>
-                            <f:facet name="input">
-                                <p:inputText id="skillEditName" value="#{skill.name}" style="width: 100%"/>
-                            </f:facet>
-                        </p:cellEditor>
-                    </p:column>
-
-                    <p:column style="width: 32px">
-                        <p:rowEditor/>
-                    </p:column>
-
-                </p:dataTable>
-
-
-                <p:contextMenu for="studentSkills">
-                    <p:menuitem value="Add" icon="fa-plus" update="studentSkills growl"
-                                onclick="PF('skillAdd').show()"/>
-                    <p:menuitem value="Delete" icon="fa-close" update="studentSkills growl"
-                                actionListener="#{skillBean.deleteSkill}"/>
-                </p:contextMenu>
-
-                <p:dialog header="Add Skill" widgetVar="skillAdd" resizable="false" rendered="true">
-                    <h:panelGrid columns="2" cellpadding="5">
-                        <h:outputLabel for="skillName" value="Name:"/>
-                        <p:inputText id="skillName" value="#{skillBean.newSkillName}" label="Name">
-                            <f:validateLength minimum="1" maximum="255"/>
-                        </p:inputText>
-
-                        <f:facet name="footer">
-                            <p:commandButton value="Add" update="studentSkills" actionListener="#{skillBean.addSkill}"
-                                             oncomplete="handleAddSkillRequest(xhr, status, args)"/>
-                        </f:facet>
-
-                    </h:panelGrid>
-                </p:dialog>
-
-            </h:form>
-
-        </div>
 
         <ui:insert name="footer">
             <ui:include src="WEB-INF/templates/footer.xhtml"/>
