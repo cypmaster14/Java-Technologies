@@ -14,7 +14,7 @@ http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
 
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL57Dialect"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <!--Cache-->
             <!--<property name="hibernate.cache.use_second_level_cache" value="true"/>-->

@@ -20,14 +20,14 @@ public class Project {
     @Column(name = "description")
     private String description;
 
-
     @OneToMany(mappedBy = "primaryKey.project", cascade = CascadeType.ALL)
     private Set<ProjectSkills> skills;
-
 
     @OneToOne(mappedBy = "assignedProject", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Student assignedStudent;
 
+    @OneToMany(mappedBy = "primaryKey.projects")
+    private Set<StudentsProject> students;
 
     public int getId() {
         return id;
@@ -68,5 +68,23 @@ public class Project {
 
     public void setAssignedStudent(Student assignedStudent) {
         this.assignedStudent = assignedStudent;
+    }
+
+    public Set<StudentsProject> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Set<StudentsProject> students) {
+        this.students = students;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

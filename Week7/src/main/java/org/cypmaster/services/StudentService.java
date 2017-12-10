@@ -2,7 +2,9 @@ package org.cypmaster.services;
 
 import org.cypmaster.dao.StudentDAO;
 import org.cypmaster.dao.StudentDAOImpl;
+import org.cypmaster.entities.Project;
 import org.cypmaster.entities.Student;
+import org.cypmaster.entities.StudentsProject;
 
 import javax.ejb.EJB;
 import java.util.List;
@@ -30,6 +32,14 @@ public class StudentService {
 
     public List<Student> getStudents() {
         return studentDAO.getStudents();
+    }
+
+    public List<Student> getUnallocatedStudent() {
+        return studentDAO.getUnallocatedStudent();
+    }
+
+    public List<StudentsProject> getProjectsWithStudentPreference() {
+        return studentDAO.getProjectWithStudentPreference();
     }
 
 }

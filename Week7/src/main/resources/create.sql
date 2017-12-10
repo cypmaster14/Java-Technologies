@@ -56,7 +56,7 @@ CREATE TABLE Students_Projects (
 );
 
 CREATE TABLE Assignments (
-  student_id INTEGER,
+  student_id INTEGER UNIQUE,
   project_id INTEGER,
   CONSTRAINT Assignments_PK PRIMARY KEY (student_id, project_id),
   CONSTRAINT Assignments_student_id_fk FOREIGN KEY (student_id) REFERENCES Students (id),

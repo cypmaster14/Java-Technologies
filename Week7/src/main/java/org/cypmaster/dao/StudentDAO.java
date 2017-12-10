@@ -1,6 +1,7 @@
 package org.cypmaster.dao;
 
 import org.cypmaster.entities.Student;
+import org.cypmaster.entities.StudentsProject;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -13,5 +14,10 @@ import java.util.List;
 public interface StudentDAO {
 
     List<Student> getStudents();
+
+    List<Student> getUnallocatedStudent();
+
+    List<StudentsProject> getProjectWithStudentPreference();
+
 
 }

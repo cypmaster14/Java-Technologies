@@ -6,7 +6,7 @@ import javax.persistence.*;
  * Created by Ciprian at 12/4/2017
  */
 @Entity
-@Table(name = "project_skills")
+@Table(name = "projects_skills")
 @AssociationOverrides({
         @AssociationOverride(name = "primaryKey.project", joinColumns = @JoinColumn(name = "project_id")),
         @AssociationOverride(name = "primaryKey.skill", joinColumns = @JoinColumn(name = "skill_id"))
@@ -17,7 +17,7 @@ public class ProjectSkills {
     @Id
     private ProjectSkillId primaryKey;
 
-    @Column(name = "levelOfPreference")
+    @Column(name = "level_of_preferences")
     private int levelOfPreference;
 
 

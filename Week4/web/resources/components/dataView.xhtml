@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:composite="http://java.sun.com/jsf/composite">
+
+
+    <f:loadBundle var="message" basename="Message"/>
+
+    <h:body>
+
+        <composite:interface>
+            <composite:attribute name="dataViewMessage" required="true"/>
+            <composite:attribute name="bean" required="true"/>
+            <composite:attribute name="value" required="true"/>
+            <composite:attribute name="selected" required="true"/>
+            <composite:attribute name="rowEditListener" required="true"/>
+            <composite:attribute name="rowEditCancelListener" required="true"/>
+        </composite:interface>
+
+        <composite:implementation>
+            <div class="container">
+
+                <h:form id="dataViewID">
+
+                    <p:dataTable id="dataViewTable" var="value" value="#{cc.attrs.value}"
+                                 editable="true" rowKey="#{value.student.id}" selectionMode="single">
+                        <f:facet name="header">
+                            #{cc.attrs.dataViewMessage}
+                        </f:facet>
+
+                        <p:ajax event="rowEdit" listener="#{cc.attrs.bean.onRowEditSave}" update="growl"/>
+                        <p:ajax event="rowEditCancel" listener="#{cc.attrs.bean.onRowEditCancel}" update="growl"/>
+
+
+                        <p:column headerText="#{msg.project_id}" sortBy="#{value.projectID}"
+                                  filterBy="#{value.projectID}" filterMatchMode="contains">
+
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{value.projectID}"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{value.projectID}" style="width: 100%"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="#{msg.name}" sortBy="#{value.student.name}"
+                                  filterBy="#{value.student.name}"
+                                  filterMatchMode="contains">
+                            <h:outputText value="#{value.student.name}"/>
+                        </p:column>
+
+                        <p:column style="width: 32px">
+                            <p:rowEditor/>
+                        </p:column>
+
+                    </p:dataTable>
+
+                </h:form>
+
+            </div>
+
+        </composite:implementation>
+
+    </h:body>
+
+</html>

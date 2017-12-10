@@ -33,6 +33,10 @@ public class Student {
     private Set<Skill> skills;
 
 
+    @OneToMany(mappedBy = "primaryKey.students", cascade = CascadeType.ALL)
+    private Set<StudentsProject> studentsProject;
+
+
     @JoinTable(name = "assignments",
             joinColumns = {@JoinColumn(name = "student_id")},
             inverseJoinColumns = {@JoinColumn(name = "project_id")},
@@ -81,5 +85,20 @@ public class Student {
         this.assignedProject = assignedProject;
     }
 
+    public Set<StudentsProject> getStudentsProject() {
+        return studentsProject;
+    }
 
+    public void setStudentsProject(Set<StudentsProject> studentsProject) {
+        this.studentsProject = studentsProject;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

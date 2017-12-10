@@ -57,5 +57,10 @@
             <to-view-id>/index.xhtml?faces-redirect=true</to-view-id>
         </navigation-case>
 
+        <navigation-case>
+            <from-outcome>goToAssignmentsPage</from-outcome>
+            <to-view-id>/assignments.xhtml?faces-redirect=true</to-view-id>
+        </navigation-case>
+
     </navigation-rule>
 </faces-config>

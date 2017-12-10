@@ -47,3 +47,9 @@ Week3/target/*
 */.idea/*
 */out/*
 */target/*
+
+**/.idea/*
+**/out/*
+
+*/target/*
+**.iml
