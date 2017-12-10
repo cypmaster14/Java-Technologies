@@ -12,6 +12,7 @@ http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
         <class>org.cypmaster.entities.StudentsProject</class>
         <class>org.cypmaster.entities.ProjectSkills</class>
 
+        <shared-cache-mode>ALL</shared-cache-mode>
 
         <properties>
 

@@ -28,8 +28,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
         <!--<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"/>-->
-        <script type="text/javascript"
-                src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"/>
+        <!--<script type="text/javascript"-->
+        <!--src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"/>-->
 
 
         <h:outputStylesheet library="css" name="footer.css"/>
@@ -50,41 +50,64 @@
                         <h:panelGrid columns="2" cellpadding="5">
                             <h:outputLabel for="checkboxFilterByName" value="Filter By Name"/>
                             <p:selectBooleanCheckbox id="checkboxFilterByName"
-                                                     value="#{searchBean.filters.get(searchBean.projectFilterName).selected}"/>
+                                                     value="#{searchBean.valueFilters.get(searchBean.projectFilterName).selected}"/>
 
                             <h:outputLabel for="filterByName" value="Name"/>
                             <p:inputText id="filterByName"
-                                         value="#{searchBean.filters.get(searchBean.projectFilterName).value}"/>
+                                         value="#{searchBean.valueFilters.get(searchBean.projectFilterName).value}"/>
 
                             <h:outputLabel for="checkboxFilterByDescription" value="Filter By Description"/>
                             <p:selectBooleanCheckbox id="checkboxFilterByDescription"
-                                                     value="#{searchBean.filters.get(searchBean.projectFilterDescription).selected}"/>
+                                                     value="#{searchBean.valueFilters.get(searchBean.projectFilterDescription).selected}"/>
 
                             <h:outputLabel for="filterByDescription" value="Description"/>
                             <p:inputText id="filterByDescription"
-                                         value="#{searchBean.filters.get(searchBean.projectFilterDescription).value}"/>
+                                         value="#{searchBean.valueFilters.get(searchBean.projectFilterDescription).value}"/>
 
                             <h:outputLabel for="checkboxFilterByCapacity" value="Filter By Capacity"/>
                             <p:selectBooleanCheckbox id="checkboxFilterByCapacity"
-                                                     value="#{searchBean.filters.get(searchBean.projectFilterCapacity).selected}"/>
+                                                     value="#{searchBean.rangeFilters.get(searchBean.projectFilterCapacity).selected}"/>
 
                             <h:outputLabel for="filterByCapacity" value="Capacity"/>
-                            <p:inputText id="filterByCapacity"
-                                         value="#{searchBean.filters.get(searchBean.projectFilterCapacity).value}">
-                            </p:inputText>
+                            <h:panelGrid columns="1" style="margin-bottom: 10px" id="filterByCapacity">
+                                <h:outputText id="displayRange"
+                                              value="Between #{searchBean.rangeFilters.get(searchBean.projectFilterCapacity).begin} and #{searchBean.rangeFilters.get(searchBean.projectFilterCapacity).end}"/>
+                                <p:slider for="txt6,txt7" display="displayRange" style="width: 400px" range="true"
+                                          minValue="#{searchBean.rangeFilters.get(searchBean.projectFilterCapacity).begin}"
+                                          maxValue="#{searchBean.rangeFilters.get(searchBean.projectFilterCapacity).end}"
+                                          displayTemplate="Between {min} and {max}"/>
+                            </h:panelGrid>
+                            <h:inputHidden id="txt6"
+                                           value="#{searchBean.rangeFilters.get(searchBean.projectFilterCapacity).begin}"/>
+                            <h:inputHidden id="txt7"
+                                           value="#{searchBean.rangeFilters.get(searchBean.projectFilterCapacity).end}"/>
 
                         </h:panelGrid>
 
                         <p:commandButton value="Submit" icon="ui-icon-check" actionListener="#{searchBean.search}"
-                                         update="growl"/>
-
-                        <p:commandButton value="Ajax Submit" id="ajax" update="growl"
-                                         actionListener="#{searchBean.buttonAction}" styleClass="ui-priority-primary"/>
-
-
+                                         update="growl formResultProjectTable"/>
                     </p:panel>
 
+                </h:form>
 
+                <h:form id="formResultProjectTable">
+                    <h:form rendered="#{searchBean.showResultProjectTable}">
+                        <h2>Projects:</h2>
+
+                        <p:dataTable value="#{searchBean.projects}" var="project">
+                            <p:column headerText="Name">
+                                <h:outputText value="#{project.name}"/>
+                            </p:column>
+
+                            <p:column headerText="Description">
+                                <h:outputText value="#{project.description}"/>
+                            </p:column>
+
+                            <p:column headerText="Capacity">
+                                <h:outputText value="#{project.capacity}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
                 </h:form>
 
             </div>

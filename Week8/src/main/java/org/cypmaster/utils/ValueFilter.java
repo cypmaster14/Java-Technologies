@@ -3,12 +3,12 @@ package org.cypmaster.utils;
 /**
  * Created by Ciprian at 12/9/2017
  */
-public class Filter {
+public class ValueFilter {
 
     private String value;
     private boolean selected;
 
-    public Filter(String value, boolean selected) {
+    public ValueFilter(String value, boolean selected) {
         this.value = value;
         this.selected = selected;
     }
@@ -33,7 +33,7 @@ public class Filter {
 
     @Override
     public String toString() {
-        return "Filter{" +
+        return "ValueFilter{" +
                 "value='" + value + '\'' +
                 ", selected=" + selected +
                 '}';

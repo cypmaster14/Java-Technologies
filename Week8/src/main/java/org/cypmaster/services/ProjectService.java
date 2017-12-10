@@ -2,7 +2,8 @@ package org.cypmaster.services;
 
 import org.cypmaster.dao.ProjectDAO;
 import org.cypmaster.entities.Project;
-import org.cypmaster.utils.Filter;
+import org.cypmaster.utils.RangeFilter;
+import org.cypmaster.utils.ValueFilter;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;
@@ -25,8 +26,12 @@ public class ProjectService {
     }
 
 
-    public List<Project> search(Map<String, Filter> selectedFilters) {
-        return projectDAO.search(selectedFilters);
+    public List<Project> search(Map<String, ValueFilter> valueFiltersSelected, Map<String, RangeFilter> rangeFiltersSelected) {
+        return projectDAO.search(valueFiltersSelected, rangeFiltersSelected);
+    }
+
+    public int findNumberOfProjects() {
+        return projectDAO.findNumberOfProjects();
     }
 
 

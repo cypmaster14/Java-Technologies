@@ -7,6 +7,7 @@ import java.util.Set;
 /**
  * Created by Ciprian at 12/4/2017
  */
+@Cacheable(true)
 @Entity
 @Table(name = "projects")
 public class Project {

@@ -9,12 +9,13 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static org.junit.Assert.assertTrue;
-
 import javax.naming.NamingException;
+import javax.persistence.Cache;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import java.util.List;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Ciprian at 12/9/2017
@@ -55,6 +56,11 @@ public class StudentTest {
         studentDAO.update(gabor);
 
         Student gaborPrajit = studentDAO.findById(2);
+
+        Cache cache = emf.getCache();
+        if (cache.contains(Student.class, 2)) {
+            System.out.println("Gabor is in Cache");
+        }
 
         assertTrue(gabor.getName().equals(gaborPrajit.getName()));
     }
