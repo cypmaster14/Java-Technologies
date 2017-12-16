@@ -10,12 +10,15 @@
       xmlns:ez="http://java.sun.com/jsf/composite/components"
 >
 
-
     <f:loadBundle var="message" basename="Message"/>
+
     <h:head>
         <title>
             Title
         </title>
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
         <!--Import materialize.css-->
         <link rel="stylesheet"
@@ -24,41 +27,20 @@
         <!--Let browser know website is optimized for mobile-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
+        <!--<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"/>-->
         <!--<script type="text/javascript"-->
         <!--src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"/>-->
 
 
+        <h:outputStylesheet library="css" name="footer.css"/>
+        <h:outputStylesheet library="css" name="table.css"/>
+        <h:outputScript library="js" name="projects.js"/>
+
+
     </h:head>
     <h:body>
-        <div>
-            <h3 class="center-align">
-                Welcome
-            </h3>
-        </div>
-
-        <p:growl id="growl" showDetail="true"/>
-
-
-        <div class="container">
-            <div class="row">
-                <h:form>
-                    <ul>
-
-                        <li>
-                            Go to <h:commandLink value="search page" action="goToSearchPage"/>
-                        </li>
-
-                        <li>
-                            Go to <h:commandLink value="test cache page" action="goToTestCachePage"/>
-                        </li>
-
-                        <li>
-                            Go to <h:commandLink value=" assignmets page" action="goToAssignmentsPage"/>
-                        </li>
-
-                    </ul>
-                </h:form>
-            </div>
-        </div>
+        <h2>
+            #{testCacheBean.message}
+        </h2>
     </h:body>
 </html>

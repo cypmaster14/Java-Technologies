@@ -7,45 +7,51 @@ import java.util.Comparator;
 /**
  * Created by Ciprian at 12/5/2017
  */
-public class StudentPreferenceDTO implements Comparable<StudentPreferenceDTO> {
+public class StudentPreferenceDTO {
 
-    private Student student;
-    private int levelOfPreference;
-
+    private int projectId;
+    private String projectName;
+    private float averagePreference;
 
     public StudentPreferenceDTO() {
     }
 
-    public Student getStudent() {
-        return student;
+    public StudentPreferenceDTO(int projectId, String projectName, float averagePreference) {
+        this.projectId = projectId;
+        this.projectName = projectName;
+        this.averagePreference = averagePreference;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public int getProjectId() {
+        return projectId;
     }
 
-    public int getLevelOfPreference() {
-        return levelOfPreference;
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
     }
 
-    public void setLevelOfPreference(int levelOfPreference) {
-        this.levelOfPreference = levelOfPreference;
+    public String getProjectName() {
+        return projectName;
     }
 
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public float getAveragePreference() {
+        return averagePreference;
+    }
+
+    public void setAveragePreference(float averagePreference) {
+        this.averagePreference = averagePreference;
+    }
 
     @Override
     public String toString() {
-        return "{" +
-                "student=" + student.getName() +
-                ", levelOfPreference=" + levelOfPreference +
+        return "StudentPreferenceDTO{" +
+                "projectId=" + projectId +
+                ", projectName='" + projectName + '\'' +
+                ", averagePreference=" + averagePreference +
                 '}';
-    }
-
-    @Override
-    public int compareTo(StudentPreferenceDTO o) {
-        if (this.getLevelOfPreference() < o.getLevelOfPreference()) {
-            return -1;
-        }
-        return 1;
     }
 }

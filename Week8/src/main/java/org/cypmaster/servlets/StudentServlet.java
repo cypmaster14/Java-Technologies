@@ -28,7 +28,7 @@ public class StudentServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter printWriter = resp.getWriter();
         printWriter.write("Ceva");
-        System.out.println(studentService.getStudents());
+        System.out.println(studentService.findAll());
         printWriter.close();
     }
 }

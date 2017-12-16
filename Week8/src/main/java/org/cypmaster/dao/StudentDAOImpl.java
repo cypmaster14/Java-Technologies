@@ -1,14 +1,14 @@
 package org.cypmaster.dao;
 
+import org.cypmaster.dto.StudentPreferenceDTO;
 import org.cypmaster.entities.*;
 import org.cypmaster.entities.metamodels.Student_;
 import org.cypmaster.utils.PersistenceUtil;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -20,6 +20,7 @@ import java.util.concurrent.ExecutionException;
  * Created by Ciprian at 12/4/2017
  */
 @Stateless
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class StudentDAOImpl implements StudentDAO {
 
     @PersistenceContext(unitName = "Week7")
@@ -76,10 +77,13 @@ public class StudentDAOImpl implements StudentDAO {
     }
 
     @Override
-    public List<StudentsProject> findProjectWithStudentPreference() {
+    public List<String> findProjectWithStudentPreference() {
 
-        Query query = entityManager.createQuery("SELECT avg(sp.levelOfPreference) from StudentsProject sp group by sp.id.projects.id ORDER BY 1 asc ");
-        List<StudentsProject> studentsProjects = query.getResultList();
+        Query query = entityManager.createQuery(
+                "SELECT concat(avg(sp.levelOfPreference),' ', sp.id.projects.name) from StudentsProject sp " +
+                        "group by sp.id.projects.id,sp.id.projects.name " +
+                        "ORDER BY 1 asc ");
+        List<String> studentsProjects = query.getResultList();
         return studentsProjects;
     }
 

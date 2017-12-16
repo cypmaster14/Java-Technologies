@@ -50,6 +50,5 @@ Week3/target/*
 
 **/.idea/*
 **/out/*
-
-*/target/*
+**/target/*
 **.iml

@@ -14,6 +14,8 @@ public class PersistenceUtil {
     public final static String PERSISTENCE_UNIT_NAME = "Week7";
     public final static String PERSISTENCE_UNIT_TEST_NAME = "Week7Test";
 
+    public static int cacheHits = 0;
+
     private PersistenceUtil() {
         this.emf = Persistence.createEntityManagerFactory("Week7");
     }

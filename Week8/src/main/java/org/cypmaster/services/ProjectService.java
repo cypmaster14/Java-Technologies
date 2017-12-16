@@ -34,5 +34,17 @@ public class ProjectService {
         return projectDAO.findNumberOfProjects();
     }
 
+    public List<Project> findAll() {
+        return projectDAO.findAll();
+    }
+
+    public Project findById(int id) {
+        return projectDAO.findById(id);
+    }
+
+    public boolean projectIsAvailable(int id) {
+        return projectDAO.projectIsAvailable(id);
+    }
+
 
 }

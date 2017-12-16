@@ -1,6 +1,7 @@
 package org.cypmaster.services;
 
 import org.cypmaster.dao.StudentDAO;
+import org.cypmaster.dto.StudentPreferenceDTO;
 import org.cypmaster.entities.Student;
 import org.cypmaster.entities.StudentsProject;
 
@@ -31,7 +32,7 @@ public class StudentService {
         return studentService;
     }
 
-    public List<Student> getStudents() {
+    public List<Student> findAll() {
         return studentDAO.findAll();
     }
 
@@ -39,7 +40,7 @@ public class StudentService {
         return studentDAO.findUnallocatedStudent();
     }
 
-    public List<StudentsProject> getProjectsWithStudentPreference() {
+    public List<String> getProjectsWithStudentPreference() {
         return studentDAO.findProjectWithStudentPreference();
     }
 

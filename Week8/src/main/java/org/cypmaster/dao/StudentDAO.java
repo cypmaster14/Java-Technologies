@@ -1,5 +1,6 @@
 package org.cypmaster.dao;
 
+import org.cypmaster.dto.StudentPreferenceDTO;
 import org.cypmaster.entities.Project;
 import org.cypmaster.entities.Student;
 import org.cypmaster.entities.StudentsProject;
@@ -27,10 +28,9 @@ public interface StudentDAO {
 
     List<Student> findUnallocatedStudent();
 
-    List<StudentsProject> findProjectWithStudentPreference();
+    List<String> findProjectWithStudentPreference();
 
     List<Student> findStudentsWithNonePreferences();
-
 
 
     void populate();

@@ -1,7 +1,11 @@
 package org.cypmaster.test;
 
+import org.cypmaster.dao.ProjectDAO;
+import org.cypmaster.dao.ProjectDAOImpl;
 import org.cypmaster.dao.StudentDAO;
 import org.cypmaster.dao.StudentDAOImpl;
+import org.cypmaster.dto.StudentPreferenceDTO;
+import org.cypmaster.entities.Project;
 import org.cypmaster.entities.Student;
 import org.cypmaster.entities.StudentsProject;
 import org.cypmaster.utils.PersistenceUtil;
@@ -13,6 +17,7 @@ import javax.naming.NamingException;
 import javax.persistence.Cache;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
@@ -25,6 +30,7 @@ public class StudentTest {
     private static EntityManagerFactory emf;
     private static EntityManager entityManager;
     private static StudentDAO studentDAO;
+    private static ProjectDAO projectDAO;
 
     @BeforeClass
     public static void setUp() throws NamingException {
@@ -32,6 +38,8 @@ public class StudentTest {
         entityManager = emf.createEntityManager();
         studentDAO = new StudentDAOImpl();
         studentDAO.setEntityManager(entityManager);
+        projectDAO = new ProjectDAOImpl();
+        projectDAO.setEntityManager(entityManager);
     }
 
     @AfterClass
@@ -51,18 +59,30 @@ public class StudentTest {
     @Test
     public void studentUpdate() {
         Student gabor = studentDAO.findById(2);
-        gabor.setName("Silviu #Prajit Gabor");
-
+        gabor.setName("Silviu #6 Gabor");
         studentDAO.update(gabor);
 
-        Student gaborPrajit = studentDAO.findById(2);
+        Student gabor6 = studentDAO.findById(2);
+        assertTrue(gabor.getName().equals(gabor6.getName()));
+    }
 
-        Cache cache = emf.getCache();
-        if (cache.contains(Student.class, 2)) {
-            System.out.println("Gabor is in Cache");
-        }
+    @Test
+    public void addAndDeleteStudent() {
+        List<Student> students = studentDAO.findAll();
+        int numberOfStudentsBeforeOperations = students.size();
 
-        assertTrue(gabor.getName().equals(gaborPrajit.getName()));
+
+        Student studentMihalache = new Student();
+        studentMihalache.setName("Mihalache Stefan");
+        studentMihalache.setEmail("ms@mail.com");
+
+        studentDAO.add(studentMihalache);
+
+        long id = studentMihalache.getId();
+        studentDAO.delete(id);
+
+        int numberOfStudentsAfterOperations = studentDAO.findAll().size();
+        assertTrue(numberOfStudentsBeforeOperations == numberOfStudentsAfterOperations);
     }
 
     @Test
@@ -70,12 +90,16 @@ public class StudentTest {
         List<Student> unallocatedStudents = studentDAO.findUnallocatedStudent();
         System.out.println(unallocatedStudents);
 
-        assertTrue(1 == 1);
+        assertTrue(unallocatedStudents.size() != 0);
     }
 
     @Test
     public void getProjectWithStudentPreference() {
-        List<StudentsProject> projectPreference = studentDAO.findProjectWithStudentPreference();
-        System.out.println(projectPreference);
+        List<String> projectPreference = studentDAO.findProjectWithStudentPreference();
+        projectPreference.forEach(info -> {
+            System.out.println(Arrays.toString(info.split(" ", 2)));
+        });
+        List<Project> projects = projectDAO.findAll();
+        System.out.println(projectPreference.size() == projects.size());
     }
 }

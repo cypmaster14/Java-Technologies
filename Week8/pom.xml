@@ -85,6 +85,20 @@
             <version>2.1.7</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/javax.interceptor/javax.interceptor-api -->
+        <dependency>
+            <groupId>javax.interceptor</groupId>
+            <artifactId>javax.interceptor-api</artifactId>
+            <version>LATEST</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.itextpdf/itextpdf -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.5.12</version>
+        </dependency>
+
 
         <dependency>
             <groupId>org.modelmapper</groupId>
