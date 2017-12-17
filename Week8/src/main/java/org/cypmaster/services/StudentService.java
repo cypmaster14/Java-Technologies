@@ -4,6 +4,7 @@ import org.cypmaster.dao.StudentDAO;
 import org.cypmaster.dto.StudentPreferenceDTO;
 import org.cypmaster.entities.Student;
 import org.cypmaster.entities.StudentsProject;
+import org.cypmaster.utils.StudentToProjectAssignment;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;
@@ -46,6 +47,10 @@ public class StudentService {
 
     public void populate() {
         studentDAO.populate();
+    }
+
+    public boolean allocateStudentToProject(List<StudentToProjectAssignment> assignments) {
+        return studentDAO.assignStudentToProject(assignments);
     }
 
 }

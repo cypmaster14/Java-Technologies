@@ -41,7 +41,7 @@ INSERT INTO Projects (id, name, description, capacity) VALUES (3, "OPID", "Some 
 INSERT INTO Projects (id, name, description, capacity) VALUES (4, "EDeC", "Some description", 1);
 
 
-INSERT INTO Assignments (student_id, project_id) VALUES (1, 3);
+INSERT INTO Assignments (student_id, project_id) VALUES (1, 1);
 INSERT INTO Assignments (student_id, project_id) VALUES (2, 1);
 INSERT INTO Assignments (student_id, project_id) VALUES (3, 2);
 INSERT INTO Assignments (student_id, project_id) VALUES (4, 3);

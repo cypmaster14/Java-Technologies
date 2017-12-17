@@ -26,7 +26,7 @@ CREATE TABLE Students_Skills
   skill_id   INTEGER,
   CONSTRAINT Students_Skills_pk PRIMARY KEY (student_id, skill_id),
   CONSTRAINT Students_Skills_students_id_fk FOREIGN KEY (student_id) REFERENCES students (id),
-  CONSTRAINT Students_Skills_skills_id_fk FOREIGN KEY (skill_id) REFERENCES studentSkills (id)
+  CONSTRAINT Students_Skills_skills_id_fk FOREIGN KEY (skill_id) REFERENCES skills (id)
 );
 
 CREATE TABLE Projects (

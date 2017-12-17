@@ -4,6 +4,7 @@ import org.cypmaster.dto.StudentPreferenceDTO;
 import org.cypmaster.entities.Project;
 import org.cypmaster.entities.Student;
 import org.cypmaster.entities.StudentsProject;
+import org.cypmaster.utils.StudentToProjectAssignment;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -32,6 +33,7 @@ public interface StudentDAO {
 
     List<Student> findStudentsWithNonePreferences();
 
+    boolean assignStudentToProject(List<StudentToProjectAssignment> assignments);
 
     void populate();
 

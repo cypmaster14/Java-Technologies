@@ -39,15 +39,17 @@
 
     </h:head>
     <h:body>
+
         <h2>
             Assignments
         </h2>
+
         <h:form id="assignmentForm">
 
             <p:growl id="growl"/>
 
             <p:panel id="panel" header="Student Assignment" style="margin-bottom: 10px">
-                <h:panelGrid columns="4" cellpadding="20">
+                <h:panelGrid columns="5" cellpadding="20">
 
                     <ui:repeat value="#{assignmentPageBean.assignments}" var="assignment">
 
@@ -66,10 +68,13 @@
                                            itemValue="#{project.id}" itemLabel="#{project.name}"/>
                         </p:selectOneMenu>
 
+                        <p:commandButton icon="fa fa-fw fa-remove" type="button" update=" growl assignmentForm"
+                                         action="#{assignmentPageBean.deleteAssignment(assignment)}"/>
+
+
                         <h:outputText value="&lt;br/&gt;" escape="false"/>
                     </ui:repeat>
                 </h:panelGrid>
-
 
                 <p:commandButton update="growl assignmentForm" value="Add Assignment"
                                  actionListener="#{assignmentPageBean.addStudentAssignmentOption}"/>

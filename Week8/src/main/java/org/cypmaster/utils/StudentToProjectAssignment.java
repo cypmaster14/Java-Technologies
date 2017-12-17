@@ -1,14 +1,16 @@
 package org.cypmaster.utils;
 
+import java.util.Objects;
+
 /**
  * Created by Ciprian at 12/16/2017
  */
 public class StudentToProjectAssignment {
 
-    private int studentId;
+    private long studentId;
     private int projectId;
 
-    public StudentToProjectAssignment(int studentId, int projectId) {
+    public StudentToProjectAssignment(long studentId, int projectId) {
         this.studentId = studentId;
         this.projectId = projectId;
     }
@@ -17,11 +19,11 @@ public class StudentToProjectAssignment {
         this(-1, -1);
     }
 
-    public int getStudentId() {
+    public long getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(int studentId) {
+    public void setStudentId(long studentId) {
         this.studentId = studentId;
     }
 
@@ -31,6 +33,21 @@ public class StudentToProjectAssignment {
 
     public void setProjectId(int projectId) {
         this.projectId = projectId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof StudentToProjectAssignment)) return false;
+        StudentToProjectAssignment that = (StudentToProjectAssignment) o;
+        return studentId == that.studentId &&
+                projectId == that.projectId;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(studentId, projectId);
     }
 
     @Override

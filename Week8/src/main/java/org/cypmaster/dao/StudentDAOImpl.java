@@ -4,6 +4,7 @@ import org.cypmaster.dto.StudentPreferenceDTO;
 import org.cypmaster.entities.*;
 import org.cypmaster.entities.metamodels.Student_;
 import org.cypmaster.utils.PersistenceUtil;
+import org.cypmaster.utils.StudentToProjectAssignment;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -90,6 +91,30 @@ public class StudentDAOImpl implements StudentDAO {
     @Override
     public List<Student> findStudentsWithNonePreferences() {
         return null;
+    }
+
+    @Override
+    public boolean assignStudentToProject(List<StudentToProjectAssignment> assignments) {
+
+        try {
+            for (StudentToProjectAssignment assignment : assignments) {
+                System.out.println("Saving:" + assignment);
+                Student student = entityManager.find(Student.class, assignment.getStudentId());
+                Project project = entityManager.find(Project.class, assignment.getProjectId());
+
+                student.setAssignedProject(project);
+                project.getAssignedStudent().add(student);
+
+                entityManager.persist(student);
+                entityManager.persist(project);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+//            e.printStackTrace();
+            return false;
+        }
+
+        return true;
     }
 
 
