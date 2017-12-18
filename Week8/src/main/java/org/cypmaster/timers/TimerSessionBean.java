@@ -28,7 +28,7 @@ public class TimerSessionBean {
     private final static Font CAT_FONT = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
     private final static Font SUB_FONT = new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD);
 
-    //    @Schedule(second = "13,34,57", minute = "*", hour = "*")
+    @Schedule(second = "59", minute = "59", hour = "23")
     public void execute(Timer timer) {
         System.out.println("Executing ...");
         System.out.println("Execution Time : " + new Date());

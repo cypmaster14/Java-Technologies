@@ -1,4 +1,4 @@
-package org.cypmaster;
+package org.cypmaster.beans;
 
 import org.cypmaster.services.ProjectService;
 import org.cypmaster.utils.PersistenceUtil;

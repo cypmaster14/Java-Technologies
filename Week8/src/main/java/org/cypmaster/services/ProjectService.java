@@ -26,8 +26,8 @@ public class ProjectService {
     }
 
 
-    public List<Project> search(Map<String, ValueFilter> valueFiltersSelected, Map<String, RangeFilter> rangeFiltersSelected) {
-        return projectDAO.search(valueFiltersSelected, rangeFiltersSelected);
+    public List<Project> findWithFilters(Map<String, ValueFilter> valueFiltersSelected, Map<String, RangeFilter> rangeFiltersSelected) {
+        return projectDAO.findWithFilters(valueFiltersSelected, rangeFiltersSelected);
     }
 
     public int findNumberOfProjects() {

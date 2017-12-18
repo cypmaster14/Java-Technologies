@@ -4,7 +4,6 @@ import org.cypmaster.entities.Project;
 import org.cypmaster.services.ProjectService;
 import org.cypmaster.utils.ValueFilter;
 import org.cypmaster.utils.RangeFilter;
-import org.w3c.dom.ranges.Range;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -71,7 +70,7 @@ public class SearchBean implements Serializable {
             return;
         }
 
-        projects = projectService.search(valueFiltersSelected, rangeFiltersSelected);
+        projects = projectService.findWithFilters(valueFiltersSelected, rangeFiltersSelected);
         addMessage("Projects Found:" + projects.size());
         if (projects.size() > 0) {
             showResultProjectTable = true;

@@ -22,6 +22,7 @@ import java.util.Map;
  */
 @Stateless
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+@Interceptors(SearchProjectsInterceptor.class)
 public class ProjectDAOImpl implements ProjectDAO {
 
     @PersistenceContext(unitName = "Week7")
@@ -32,9 +33,8 @@ public class ProjectDAOImpl implements ProjectDAO {
     private final static String PROJECT_FILTER_CAPACITY = "FILTER_BY_CAPACITY";
 
 
-    @Interceptors(SearchProjectsInterceptor.class)
     @Override
-    public List<Project> search(Map<String, ValueFilter> valueFilters, Map<String, RangeFilter> rangeFiltersSelected) {
+    public List<Project> findWithFilters(Map<String, ValueFilter> valueFilters, Map<String, RangeFilter> rangeFiltersSelected) {
 
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Project> query = builder.createQuery(Project.class);
@@ -120,7 +120,6 @@ public class ProjectDAOImpl implements ProjectDAO {
 
         return project.getAssignedStudent().size() < project.getCapacity();
     }
-
 
     public EntityManager getEntityManager() {
         return entityManager;

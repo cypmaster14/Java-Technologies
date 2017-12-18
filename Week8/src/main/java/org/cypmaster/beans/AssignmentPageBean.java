@@ -12,6 +12,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -53,6 +54,7 @@ public class AssignmentPageBean {
 
     public void addStudentAssignmentOption() {
         assignments.add(new StudentToProjectAssignment());
+        System.out.println(assignments);
     }
 
     public void saveAssignments() {
@@ -65,7 +67,8 @@ public class AssignmentPageBean {
         boolean studentsWereAllocatedToProjects = assignmentBean.allocateStudentToProject(assignments);
         System.out.println(studentsWereAllocatedToProjects);
         if (!studentsWereAllocatedToProjects) {
-            addMessage("Some error occurred during the allocation to projects");
+            addMessage("Some error occurred during the allocation to projects. No student was allocated");
+            return;
         }
         assignments.forEach(
                 assignment ->
@@ -75,13 +78,14 @@ public class AssignmentPageBean {
                         )
         );
         System.out.println(projectStatusBean.getProjectToAssignStudents());
+        addMessage("Assignments saved");
     }
 
     public void deleteAssignment(StudentToProjectAssignment assignment) {
         System.out.println("Delete assignment");
+        addMessage("Assignment Deleted");
         assignments.remove(assignment);
     }
-
 
     public List<Student> getStudents() {
         return students;
@@ -114,7 +118,8 @@ public class AssignmentPageBean {
 
     private boolean userInputIsValid() {
         for (StudentToProjectAssignment assignment : assignments) {
-            if (assignment.getProjectId() == -1 || assignment.getStudentId() == -1) {
+            if (assignment.getProjectId() == -1 || assignment.getProjectId() == 0
+                    || assignment.getStudentId() == 0 || assignment.getStudentId() == -1) {
                 return false;
             }
         }

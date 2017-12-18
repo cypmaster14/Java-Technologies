@@ -68,7 +68,7 @@
                                            itemValue="#{project.id}" itemLabel="#{project.name}"/>
                         </p:selectOneMenu>
 
-                        <p:commandButton icon="fa fa-fw fa-remove" type="button" update=" growl assignmentForm"
+                        <p:commandButton icon="fa fa-fw fa-remove" update="assignmentForm assignmentForm:growl"
                                          action="#{assignmentPageBean.deleteAssignment(assignment)}"/>
 
 

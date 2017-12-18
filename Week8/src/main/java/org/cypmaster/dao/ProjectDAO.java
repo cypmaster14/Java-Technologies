@@ -15,7 +15,7 @@ import java.util.Map;
 @Local
 public interface ProjectDAO {
 
-    List<Project> search(Map<String, ValueFilter> filters, Map<String, RangeFilter> rangeFiltersSelected);
+    List<Project> findWithFilters(Map<String, ValueFilter> filters, Map<String, RangeFilter> rangeFiltersSelected);
 
     Integer findNumberOfProjects();
 

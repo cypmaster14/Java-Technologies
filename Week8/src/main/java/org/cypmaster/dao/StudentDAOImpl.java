@@ -1,21 +1,13 @@
 package org.cypmaster.dao;
 
-import org.cypmaster.dto.StudentPreferenceDTO;
 import org.cypmaster.entities.*;
-import org.cypmaster.entities.metamodels.Student_;
-import org.cypmaster.utils.PersistenceUtil;
 import org.cypmaster.utils.StudentToProjectAssignment;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Ciprian at 12/4/2017
@@ -94,27 +86,18 @@ public class StudentDAOImpl implements StudentDAO {
     }
 
     @Override
-    public boolean assignStudentToProject(List<StudentToProjectAssignment> assignments) {
+    public void assignStudentToProject(List<StudentToProjectAssignment> assignments) throws Exception {
+        for (StudentToProjectAssignment assignment : assignments) {
+            System.out.println("Saving:" + assignment);
+            Student student = entityManager.find(Student.class, assignment.getStudentId());
+            Project project = entityManager.find(Project.class, assignment.getProjectId());
 
-        try {
-            for (StudentToProjectAssignment assignment : assignments) {
-                System.out.println("Saving:" + assignment);
-                Student student = entityManager.find(Student.class, assignment.getStudentId());
-                Project project = entityManager.find(Project.class, assignment.getProjectId());
+            student.setAssignedProject(project);
+            project.getAssignedStudent().add(student);
 
-                student.setAssignedProject(project);
-                project.getAssignedStudent().add(student);
-
-                entityManager.persist(student);
-                entityManager.persist(project);
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-//            e.printStackTrace();
-            return false;
+            entityManager.persist(student);
+            entityManager.persist(project);
         }
-
-        return true;
     }
 
 

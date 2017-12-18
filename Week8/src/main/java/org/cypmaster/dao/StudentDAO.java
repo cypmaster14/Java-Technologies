@@ -1,13 +1,9 @@
 package org.cypmaster.dao;
 
-import org.cypmaster.dto.StudentPreferenceDTO;
-import org.cypmaster.entities.Project;
 import org.cypmaster.entities.Student;
-import org.cypmaster.entities.StudentsProject;
 import org.cypmaster.utils.StudentToProjectAssignment;
 
 import javax.ejb.Local;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import java.util.List;
 
@@ -33,7 +29,7 @@ public interface StudentDAO {
 
     List<Student> findStudentsWithNonePreferences();
 
-    boolean assignStudentToProject(List<StudentToProjectAssignment> assignments);
+    void assignStudentToProject(List<StudentToProjectAssignment> assignments) throws Exception;
 
     void populate();
 

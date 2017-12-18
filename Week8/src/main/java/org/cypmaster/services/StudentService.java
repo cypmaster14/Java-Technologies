@@ -50,7 +50,14 @@ public class StudentService {
     }
 
     public boolean allocateStudentToProject(List<StudentToProjectAssignment> assignments) {
-        return studentDAO.assignStudentToProject(assignments);
+        try {
+            studentDAO.assignStudentToProject(assignments);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Some error occurred during the allocation to projects");
+            return false;
+        }
     }
 
 }
